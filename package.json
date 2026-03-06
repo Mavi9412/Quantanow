@@ -1,0 +1,38 @@
+{
+  "name": "quantanow-website",
+  "version": "1.0.0",
+  "description": "Modern AI agency website for QuantaNow",
+  "main": "index.html",
+  "scripts": {
+    "start": "npx serve .",
+    "dev": "npx live-server .",
+    "build": "echo 'Static website ready for deployment'",
+    "deploy": "echo 'Deploy to your hosting provider'",
+    "lint": "echo 'No linting configured - static HTML/CSS/JS'",
+    "test": "echo 'No tests configured'"
+  },
+  "keywords": [
+    "ai-agency",
+    "website",
+    "modern-design",
+    "responsive",
+    "quantanow"
+  ],
+  "author": "QuantaNow",
+  "license": "Proprietary",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/quantanow/website.git"
+  },
+  "homepage": "https://www.quantanow.com",
+  "devDependencies": {},
+  "dependencies": {},
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead"
+  ],
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}
