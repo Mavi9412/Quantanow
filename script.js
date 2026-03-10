@@ -1,8 +1,8 @@
-// DOM elements
-const navbar = document.getElementById('navbar');
-const navToggle = document.getElementById('nav-toggle');
-const navMenu = document.getElementById('nav-menu');
-const newsletterForm = document.getElementById('newsletter-form');
+// DOM elements — targeting Webflow's actual class-based selectors
+const navbar = document.querySelector('.black-navbar');
+const navToggle = document.querySelector('.menu-button');
+const navMenu = document.querySelector('.w-nav-menu');
+const newsletterForm = document.querySelector('#email-form-2');
 
 // Mobile navigation toggle
 navToggle?.addEventListener('click', () => {
@@ -416,15 +416,5 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
-// Service Worker registration for PWA capabilities (optional)
-if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/sw.js')
-            .then(registration => {
-                console.log('SW registered: ', registration);
-            })
-            .catch(registrationError => {
-                console.log('SW registration failed: ', registrationError);
-            });
-    });
-}
+// Service Worker: disabled — no sw.js present in this project
+// Uncomment and add sw.js before enabling PWA mode.
