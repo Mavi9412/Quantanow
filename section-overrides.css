@@ -1583,6 +1583,369 @@ a.contact-info-value:hover {
   min-height: 0 !important;
 }
 
+/* ========================================
+   CASE STUDY TEMPLATE STYLES
+   ======================================== */
+
+.case-study-hero {
+  background: #fdfdfd;
+  position: relative;
+  overflow: hidden;
+  padding-bottom: 60px;
+}
+
+.cs-tags-container {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  margin-top: 32px;
+  flex-wrap: wrap;
+}
+
+.cs-tag {
+  background: rgba(16, 185, 129, 0.1);
+  color: #10B981;
+  padding: 8px 16px;
+  border-radius: 50px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  border: 1px solid rgba(16, 185, 129, 0.2);
+}
+
+.cs-featured-image-section {
+  padding: 0 0 80px 0;
+  background: #fdfdfd;
+}
+
+.cs-featured-image-container {
+  width: 100%;
+  max-width: 1160px;
+  margin: 0 auto;
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.08);
+  position: relative;
+  padding-top: 56.25%;
+  /* 16:9 Aspect Ratio */
+}
+
+.cs-featured-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.cs-details-section {
+  padding: 80px 0;
+  background: #ffffff;
+}
+
+.cs-details-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+}
+
+.cs-details-block {
+  background: #f9fbfc;
+  padding: 48px;
+  border-radius: 24px;
+  border: 1px solid rgba(0, 0, 0, 0.03);
+  transition: transform 0.3s ease;
+}
+
+.cs-details-block:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.04);
+}
+
+.cs-block-icon {
+  width: 48px;
+  height: 48px;
+  background: #ffffff;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 24px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+}
+
+.cs-block-title {
+  font-family: 'Fraunces', serif;
+  font-size: 2rem;
+  font-weight: 600;
+  margin-bottom: 16px;
+  color: #111;
+}
+
+.cs-block-text {
+  font-size: 1.1rem;
+  line-height: 1.7;
+  color: #444;
+}
+
+.cs-tech-section {
+  padding: 100px 0;
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+  color: white;
+}
+
+.cs-tech-section .section-title {
+  color: white;
+}
+
+.cs-tech-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 32px;
+}
+
+.cs-feature-card {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 40px;
+  border-radius: 20px;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  transition: all 0.3s ease;
+}
+
+.cs-feature-card:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.2);
+  transform: translateY(-4px);
+}
+
+.cs-feature-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #FFD93D;
+  margin-bottom: 12px;
+}
+
+.cs-feature-desc {
+  font-size: 1.05rem;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.8);
+  margin-bottom: 0;
+}
+
+@media screen and (max-width: 991px) {
+  .cs-details-grid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .cs-tech-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media screen and (max-width: 479px) {
+
+  .cs-details-block,
+  .cs-feature-card {
+    padding: 32px 24px;
+  }
+
+  .case-study-hero .inner-page-title {
+    font-size: 2.5rem !important;
+  }
+}
+
+
+/* ========================================
+   PORTFOLIO PAGE STYLES
+   ======================================== */
+
+.portfolio-hero {
+  background: linear-gradient(135deg, #f0f7ff 0%, #ffffff 100%);
+}
+
+.portfolio-section {
+  position: relative;
+  overflow: hidden;
+  padding: 80px 0 120px;
+  background: #fdfdfd;
+}
+
+.portfolio-gradient-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 0;
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.portfolio-blob-1 {
+  position: absolute;
+  top: -10%;
+  left: -5%;
+  width: 50vw;
+  max-width: 600px;
+}
+
+.portfolio-blob-2 {
+  position: absolute;
+  bottom: -10%;
+  right: -5%;
+  width: 60vw;
+  max-width: 800px;
+}
+
+.portfolio-grid {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 40px;
+  max-width: 1160px;
+  margin: 0 auto;
+}
+
+.portfolio-card {
+  display: flex;
+  flex-direction: column;
+  background: rgba(255, 255, 255, 0.6);
+  border: 1px solid rgba(0, 0, 0, 0.04);
+  border-radius: 24px;
+  overflow: hidden;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.03);
+  text-decoration: none;
+  transition: transform 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease;
+}
+
+.portfolio-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.08);
+  border-color: rgba(0, 0, 0, 0.08);
+}
+
+.portfolio-image-wrapper {
+  position: relative;
+  width: 100%;
+  padding-top: 60%;
+  /* 5:3 Aspect Ratio */
+  overflow: hidden;
+}
+
+.portfolio-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.portfolio-card:hover .portfolio-image {
+  transform: scale(1.05);
+}
+
+.portfolio-tag {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  background: rgba(255, 255, 255, 0.95);
+  padding: 8px 16px;
+  border-radius: 50px;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #111;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(4px);
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.portfolio-content {
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.portfolio-title {
+  font-family: 'Fraunces', serif;
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: #000;
+  margin-top: 0;
+  margin-bottom: 12px;
+  line-height: 1.2;
+}
+
+.portfolio-desc {
+  font-family: 'Inter', sans-serif;
+  font-size: 1.05rem;
+  color: #555;
+  line-height: 1.6;
+  margin-bottom: 24px;
+  flex-grow: 1;
+}
+
+.portfolio-link-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: auto;
+}
+
+.portfolio-link-text {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #000;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.portfolio-arrow {
+  width: 18px;
+  height: 18px;
+  transition: transform 0.3s ease;
+}
+
+.portfolio-card:hover .portfolio-arrow {
+  transform: translate(3px, -3px);
+}
+
+@media screen and (max-width: 991px) {
+  .portfolio-grid {
+    grid-template-columns: 1fr;
+    gap: 32px;
+    padding: 0 20px;
+  }
+
+  .portfolio-section {
+    padding: 60px 0 80px;
+  }
+}
+
+@media screen and (max-width: 479px) {
+  .portfolio-content {
+    padding: 24px;
+  }
+
+  .portfolio-title {
+    font-size: 1.5rem;
+  }
+}
+
+
 .process-hero .inner-hero-content.centered {
   margin-top: 0 !important;
   padding-top: 0 !important;
@@ -1828,3 +2191,59 @@ a.contact-info-value:hover {
     margin-bottom: 32px;
   }
 }
+
+/* ========================================
+   CASE STUDY RESPONSIVE FIXES
+   ======================================== */
+
+@media screen and (max-width: 991px) {
+  .inner-page-title {
+    font-size: clamp(2.2rem, 8vw, 2.8rem) !important;
+    letter-spacing: -1px !important;
+    margin-top: 16px !important;
+  }
+
+  .inner-page-subtitle {
+    font-size: 1.1rem !important;
+  }
+
+  .cs-featured-image-container {
+    margin: 32px 0 !important;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .cs-details-grid {
+    grid-template-columns: 1fr !important;
+    gap: 32px !important;
+  }
+
+  .cs-tech-grid {
+    grid-template-columns: 1fr !important;
+    gap: 20px !important;
+  }
+
+  .cs-details-block {
+    padding: 24px !important;
+  }
+
+  .inner-cta-heading {
+    font-size: 2.2rem !important;
+    line-height: 1.2 !important;
+  }
+  
+  .inner-cta-content {
+    padding: 40px 20px !important;
+  }
+}
+
+@media screen and (max-width: 479px) {
+  .inner-page-title {
+    font-size: 1.8rem !important;
+  }
+
+  .cs-tag {
+    padding: 6px 12px !important;
+    font-size: 0.75rem !important;
+  }
+}
