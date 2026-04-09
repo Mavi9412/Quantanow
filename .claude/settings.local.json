@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(find . -type f -name \"*.html\" -exec wc -l {} \\\\;)",
+      "Bash(grep -o \"class=\\\\\"[^\\\\\"]*\\\\\"\" /d/Quantanow/*.html)",
+      "Bash(grep -n \"Portfolio\" /d/Quantanow/*.html)"
+    ]
+  }
+}

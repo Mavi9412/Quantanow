@@ -377,17 +377,7 @@ const throttledScrollHandler = throttle(() => {
 
 window.addEventListener('scroll', throttledScrollHandler);
 
-// Add interaction states for better UX
-document.querySelectorAll('.nav-link, .btn, .service-card, .feature-card').forEach(element => {
-    element.addEventListener('focus', function() {
-        this.style.outline = '2px solid #00E887';
-        this.style.outlineOffset = '2px';
-    });
-    
-    element.addEventListener('blur', function() {
-        this.style.outline = 'none';
-    });
-});
+// Focus styles are handled via :focus-visible in styles.css — no JS needed.
 
 // Console message for developers
 console.log(`
