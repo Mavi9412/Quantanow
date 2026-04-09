@@ -220,6 +220,14 @@
   color: rgba(255, 255, 255, 0.88);
 }
 
+/* ===== WE WORK WITH — disable Webflow fade-in ===== */
+.home-integration-upper-wrapper,
+[data-w-id="8a77d58d-f458-7467-8490-19fe715ee673"] {
+  opacity: 1 !important;
+  transform: none !important;
+  transition: none !important;
+}
+
 /* ===== INDUSTRIES SECTION ===== */
 .home-integration-section {
   padding: 70px 0 60px;
