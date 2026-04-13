@@ -4,7 +4,11 @@
       "Bash(find . -type f -name \"*.html\" -exec wc -l {} \\\\;)",
       "Bash(grep -o \"class=\\\\\"[^\\\\\"]*\\\\\"\" /d/Quantanow/*.html)",
       "Bash(grep -n \"Portfolio\" /d/Quantanow/*.html)",
-      "Bash(npx firebase-tools:*)"
+      "Bash(npx firebase-tools:*)",
+      "Bash(firebase deploy:*)",
+      "Bash(npx firebase:*)",
+      "Bash(node index.js)",
+      "Bash(start cmd:*)"
     ]
   }
 }
