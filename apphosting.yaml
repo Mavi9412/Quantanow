@@ -1,0 +1,15 @@
+runConfig:
+  runtime: nodejs20
+  cpu: 1
+  memoryMiB: 512
+  concurrency: 80
+
+env:
+  - variable: NODE_ENV
+    value: production
+
+  - variable: ELEVENLABS_API_KEY
+    secret: ELEVENLABS_API_KEY
+
+  - variable: AGENT_ID
+    secret: AGENT_ID

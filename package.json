@@ -4,7 +4,7 @@
   "description": "Modern AI agency website for QuantaNow",
   "main": "index.html",
   "scripts": {
-    "start": "npx serve .",
+    "start": "node server/index.js",
     "dev": "npx live-server .",
     "build": "echo 'Static website ready for deployment'",
     "deploy": "firebase deploy --only hosting",
