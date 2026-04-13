@@ -33,12 +33,17 @@
            Matches site color system.
         ============================================= */
 
-        /* ── Stats strip ── */
-        .wu-stats {
-            padding: 56px 0;
-            background: #f8fafc;
-            border-top: 1px solid #e2e8f0;
-            border-bottom: 1px solid #e2e8f0;
+        /* ── Stats strip — now inside hero, centered ── */
+        .wu-stats-hero {
+            margin-top: 52px;
+            padding: 36px 40px;
+            background: rgba(255,255,255,0.7);
+            border: 1px solid #e2e8f0;
+            border-radius: 22px;
+            backdrop-filter: blur(8px);
+            max-width: 720px;
+            margin-left: auto;
+            margin-right: auto;
         }
         .wu-stats-grid {
             display: grid;
@@ -117,11 +122,22 @@
             margin: 0 auto;
         }
 
-        /* ── Value cards grid ── */
+        /* ── Value cards carousel ── */
+        .wu-values-carousel {
+            position: relative;
+            overflow: hidden;
+        }
         .wu-values-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            display: flex;
             gap: 24px;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+            padding-bottom: 4px;
+        }
+        .wu-values-grid::-webkit-scrollbar {
+            display: none;
         }
         .wu-value-card {
             background: #ffffff;
@@ -130,6 +146,8 @@
             padding: 40px 36px;
             position: relative;
             overflow: hidden;
+            flex: 0 0 300px;
+            scroll-snap-align: start;
             transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1),
                         box-shadow 0.3s ease,
                         border-color 0.3s ease;
@@ -151,8 +169,26 @@
         .wu-value-card:hover::before {
             opacity: 1;
         }
-        .wu-value-card.wide {
-            grid-column: span 2;
+        /* carousel dots */
+        .wu-carousel-dots {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 24px;
+        }
+        .wu-carousel-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #d1d5db;
+            border: none;
+            padding: 0;
+            cursor: pointer;
+            transition: background 0.25s, transform 0.25s;
+        }
+        .wu-carousel-dot.active {
+            background: #00C473;
+            transform: scale(1.25);
         }
         .wu-card-num {
             display: inline-flex;
@@ -327,12 +363,6 @@
 
         /* ── Responsive ── */
         @media screen and (max-width: 991px) {
-            .wu-values-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            .wu-value-card.wide {
-                grid-column: span 1;
-            }
             .wu-diff-grid {
                 grid-template-columns: 1fr;
                 gap: 40px;
@@ -344,10 +374,13 @@
             .wu-stat + .wu-stat::before {
                 display: none;
             }
+            .wu-stats-hero {
+                padding: 28px 24px;
+            }
         }
         @media screen and (max-width: 767px) {
-            .wu-values-grid {
-                grid-template-columns: 1fr;
+            .wu-value-card {
+                flex: 0 0 280px;
             }
             .wu-section {
                 padding: 60px 0;
@@ -410,29 +443,27 @@
                         <div class="value-icon">🚀</div>
                         <div class="value-icon">⚡</div>
                     </div>
-                </div>
-            </div>
-        </div>
 
-        <!-- Stats Strip -->
-        <div class="wu-stats">
-            <div class="wrapper-1160px">
-                <div class="wu-stats-grid">
-                    <div class="wu-stat">
-                        <div class="wu-stat-num">60</div>
-                        <div class="wu-stat-label">Day Launch Guarantee</div>
-                    </div>
-                    <div class="wu-stat">
-                        <div class="wu-stat-num">50+</div>
-                        <div class="wu-stat-label">Products Shipped</div>
-                    </div>
-                    <div class="wu-stat">
-                        <div class="wu-stat-num">98%</div>
-                        <div class="wu-stat-label">Client Satisfaction</div>
-                    </div>
-                    <div class="wu-stat">
-                        <div class="wu-stat-num">8+</div>
-                        <div class="wu-stat-label">Industries Served</div>
+                    <!-- Stats centered inside hero -->
+                    <div class="wu-stats-hero">
+                        <div class="wu-stats-grid">
+                            <div class="wu-stat">
+                                <div class="wu-stat-num">60</div>
+                                <div class="wu-stat-label">Day Launch Guarantee</div>
+                            </div>
+                            <div class="wu-stat">
+                                <div class="wu-stat-num">50+</div>
+                                <div class="wu-stat-label">Products Shipped</div>
+                            </div>
+                            <div class="wu-stat">
+                                <div class="wu-stat-num">98%</div>
+                                <div class="wu-stat-label">Client Satisfaction</div>
+                            </div>
+                            <div class="wu-stat">
+                                <div class="wu-stat-num">8+</div>
+                                <div class="wu-stat-label">Industries Served</div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -446,7 +477,8 @@
                     <h2 class="wu-section-title">Every line of code we ship is guided by these principles</h2>
                     <p class="wu-section-sub">These aren't buzzwords on a wall. They're the operating principles behind every decision, deadline, and delivery.</p>
                 </div>
-                <div class="wu-values-grid">
+                <div class="wu-values-carousel">
+                <div class="wu-values-grid" id="valuesCarousel">
 
                     <!-- Value 01: Transparency -->
                     <div class="wu-value-card">
@@ -475,8 +507,8 @@
                         <div class="wu-card-pill">Team that cares</div>
                     </div>
 
-                    <!-- Value 04: Customer Oriented (wide) -->
-                    <div class="wu-value-card wide">
+                    <!-- Value 04: Customer Oriented -->
+                    <div class="wu-value-card">
                         <div class="wu-card-num">04</div>
                         <div class="wu-card-icon">🚀</div>
                         <div class="wu-card-title">Customer Oriented</div>
@@ -494,6 +526,9 @@
                     </div>
 
                 </div>
+                <!-- Carousel dots -->
+                <div class="wu-carousel-dots" id="carouselDots"></div>
+                </div><!-- end wu-values-carousel -->
             </div>
         </div>
 
@@ -640,6 +675,66 @@
         type="text/javascript" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0="
         crossorigin="anonymous"></script>
     <script src="section-overrides.js"></script>
+    <script>
+        (function () {
+            var carousel = document.getElementById('valuesCarousel');
+            var dotsContainer = document.getElementById('carouselDots');
+            if (!carousel) return;
+
+            var cards = carousel.querySelectorAll('.wu-value-card');
+            var total = cards.length;
+            var current = 0;
+            var autoTimer;
+
+            // Build dots
+            cards.forEach(function (_, i) {
+                var dot = document.createElement('button');
+                dot.className = 'wu-carousel-dot' + (i === 0 ? ' active' : '');
+                dot.setAttribute('aria-label', 'Go to card ' + (i + 1));
+                dot.addEventListener('click', function () {
+                    goTo(i);
+                    resetTimer();
+                });
+                dotsContainer.appendChild(dot);
+            });
+
+            function goTo(index) {
+                current = index;
+                var cardWidth = cards[0].offsetWidth + 24; // 24 = gap
+                carousel.scrollTo({ left: cardWidth * index, behavior: 'smooth' });
+                dotsContainer.querySelectorAll('.wu-carousel-dot').forEach(function (d, i) {
+                    d.classList.toggle('active', i === index);
+                });
+            }
+
+            function next() {
+                goTo((current + 1) % total);
+            }
+
+            function resetTimer() {
+                clearInterval(autoTimer);
+                autoTimer = setInterval(next, 3000);
+            }
+
+            // Sync dot on manual scroll
+            carousel.addEventListener('scroll', function () {
+                var cardWidth = cards[0].offsetWidth + 24;
+                var idx = Math.round(carousel.scrollLeft / cardWidth);
+                if (idx !== current) {
+                    current = idx;
+                    dotsContainer.querySelectorAll('.wu-carousel-dot').forEach(function (d, i) {
+                        d.classList.toggle('active', i === idx);
+                    });
+                }
+            });
+
+            // Pause on hover
+            carousel.addEventListener('mouseenter', function () { clearInterval(autoTimer); });
+            carousel.addEventListener('mouseleave', resetTimer);
+
+            resetTimer();
+        })();
+    </script>
 </body>
 
 </html>

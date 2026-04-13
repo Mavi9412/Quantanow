@@ -64,12 +64,17 @@
             justify-content: center;
         }
 
-        /* ── Metrics strip ── */
-        .proc-metrics {
-            padding: 56px 0;
-            background: #f8fafc;
-            border-top: 1px solid #e2e8f0;
-            border-bottom: 1px solid #e2e8f0;
+        /* ── Metrics inside hero ── */
+        .proc-metrics-hero {
+            margin-top: 52px;
+            padding: 36px 40px;
+            background: rgba(255,255,255,0.7);
+            border: 1px solid #e2e8f0;
+            border-radius: 22px;
+            backdrop-filter: blur(8px);
+            max-width: 760px;
+            margin-left: auto;
+            margin-right: auto;
         }
         .proc-metrics-grid {
             display: grid;
@@ -575,238 +580,33 @@
                             Launch &amp; Scale
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
 
-        <!-- ── Metrics ── -->
-        <div class="proc-metrics">
-            <div class="wrapper-1160px">
-                <div class="proc-metrics-grid">
-                    <div class="proc-metric">
-                        <div class="proc-metric-num">60 Days</div>
-                        <div class="proc-metric-label">Average Delivery</div>
-                    </div>
-                    <div class="proc-metric">
-                        <div class="proc-metric-num">100+</div>
-                        <div class="proc-metric-label">Products Shipped</div>
-                    </div>
-                    <div class="proc-metric">
-                        <div class="proc-metric-num">1 Team</div>
-                        <div class="proc-metric-label">Strategy to Launch</div>
-                    </div>
-                    <div class="proc-metric">
-                        <div class="proc-metric-num">0</div>
-                        <div class="proc-metric-label">Surprise Delays</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- ── 4 Steps ── -->
-        <div class="proc-section">
-            <div class="wrapper-1160px">
-                <div class="proc-section-header centered">
-                    <div class="proc-section-eyebrow">The Process</div>
-                    <h2 class="proc-section-title">Four steps. No surprises.<br /><span class="highlight-text">Full transparency.</span></h2>
-                    <p class="proc-section-sub">Every engagement follows the same proven structure — because structure is what lets us move fast without breaking things.</p>
-                </div>
-
-                <div class="proc-steps-grid">
-
-                    <!-- Step 1 -->
-                    <div class="proc-card">
-                        <div class="proc-card-step">Step 01</div>
-                        <div class="proc-card-icon">🎯</div>
-                        <h3 class="proc-card-title">Free Consultation</h3>
-                        <p class="proc-card-desc">We understand your vision, define scope, and align on success metrics before a single line of code is written. No obligation — just total clarity on what we can build and how fast we can deliver it.</p>
-                        <div class="proc-deliverables">
-                            <div class="proc-deliverable">
-                                <div class="proc-deliverable-dot"></div>
-                                <span>Vision &amp; goals alignment session</span>
+                    <!-- Metrics moved into hero, centered -->
+                    <div class="proc-metrics-hero">
+                        <div class="proc-metrics-grid">
+                            <div class="proc-metric">
+                                <div class="proc-metric-num">60 Days</div>
+                                <div class="proc-metric-label">Average Delivery</div>
                             </div>
-                            <div class="proc-deliverable">
-                                <div class="proc-deliverable-dot"></div>
-                                <span>Scope definition &amp; success metrics</span>
+                            <div class="proc-metric">
+                                <div class="proc-metric-num">100+</div>
+                                <div class="proc-metric-label">Products Shipped</div>
                             </div>
-                            <div class="proc-deliverable">
-                                <div class="proc-deliverable-dot"></div>
-                                <span>Honest feasibility assessment</span>
+                            <div class="proc-metric">
+                                <div class="proc-metric-num">1 Team</div>
+                                <div class="proc-metric-label">Strategy to Launch</div>
                             </div>
-                        </div>
-                        <div class="proc-duration-pill">
-                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-                            Days 1–3
-                        </div>
-                    </div>
-
-                    <!-- Step 2 -->
-                    <div class="proc-card">
-                        <div class="proc-card-step">Step 02</div>
-                        <div class="proc-card-icon">🧠</div>
-                        <h3 class="proc-card-title">AI Planning</h3>
-                        <p class="proc-card-desc">Architecture, UX flow, and delivery roadmap — prepared in days, not weeks. AI-assisted planning means technical precision with aggressive timelines. You get a full blueprint before development starts.</p>
-                        <div class="proc-deliverables">
-                            <div class="proc-deliverable">
-                                <div class="proc-deliverable-dot"></div>
-                                <span>Technical architecture blueprint</span>
+                            <div class="proc-metric">
+                                <div class="proc-metric-num">0</div>
+                                <div class="proc-metric-label">Surprise Delays</div>
                             </div>
-                            <div class="proc-deliverable">
-                                <div class="proc-deliverable-dot"></div>
-                                <span>UX wireframes &amp; user flows</span>
-                            </div>
-                            <div class="proc-deliverable">
-                                <div class="proc-deliverable-dot"></div>
-                                <span>Sprint-by-sprint delivery roadmap</span>
-                            </div>
-                        </div>
-                        <div class="proc-duration-pill">
-                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-                            Days 4–10
-                        </div>
-                    </div>
-
-                    <!-- Step 3 — wide -->
-                    <div class="proc-card wide">
-                        <div class="proc-card-inner">
-                            <div>
-                                <div class="proc-card-step">Step 03</div>
-                                <div class="proc-card-icon">⚡</div>
-                                <h3 class="proc-card-title">Build &amp; Test</h3>
-                                <p class="proc-card-desc">Weekly demos, rapid iterations, and automated QA built into every sprint. You see real progress continuously — not at the end of an 8-week black box. Feedback loops are tight, bugs are caught early, momentum never stops.</p>
-                                <div class="proc-duration-pill">
-                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-                                    Days 11–52 · Core sprint phase
-                                </div>
-                            </div>
-                            <div class="proc-deliverables" style="margin-top: 8px; gap: 12px;">
-                                <div class="proc-deliverable">
-                                    <div class="proc-deliverable-dot"></div>
-                                    <span>Weekly live demos with your team</span>
-                                </div>
-                                <div class="proc-deliverable">
-                                    <div class="proc-deliverable-dot"></div>
-                                    <span>Automated testing suite on every deploy</span>
-                                </div>
-                                <div class="proc-deliverable">
-                                    <div class="proc-deliverable-dot"></div>
-                                    <span>Continuous integration pipeline</span>
-                                </div>
-                                <div class="proc-deliverable">
-                                    <div class="proc-deliverable-dot"></div>
-                                    <span>Feedback incorporated within 48 hrs</span>
-                                </div>
-                                <div class="proc-deliverable">
-                                    <div class="proc-deliverable-dot"></div>
-                                    <span>Staging environment always live</span>
-                                </div>
-                                <div class="proc-deliverable">
-                                    <div class="proc-deliverable-dot"></div>
-                                    <span>Performance benchmarking &amp; QA sign-off</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Step 4 — wide -->
-                    <div class="proc-card wide">
-                        <div class="proc-card-inner">
-                            <div>
-                                <div class="proc-card-step">Step 04</div>
-                                <div class="proc-card-icon">🚀</div>
-                                <h3 class="proc-card-title">Launch &amp; Scale</h3>
-                                <p class="proc-card-desc">Launch confidently with full monitoring, performance optimization, and post-release growth support baked in. We don't disappear after deployment — we make sure your product scales under real user load.</p>
-                                <div class="proc-duration-pill">
-                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-                                    Days 53–60 + ongoing
-                                </div>
-                            </div>
-                            <div class="proc-deliverables" style="margin-top: 8px; gap: 12px;">
-                                <div class="proc-deliverable">
-                                    <div class="proc-deliverable-dot"></div>
-                                    <span>Production deployment with zero-downtime rollout</span>
-                                </div>
-                                <div class="proc-deliverable">
-                                    <div class="proc-deliverable-dot"></div>
-                                    <span>Real-time monitoring &amp; alerting setup</span>
-                                </div>
-                                <div class="proc-deliverable">
-                                    <div class="proc-deliverable-dot"></div>
-                                    <span>Post-launch performance optimization</span>
-                                </div>
-                                <div class="proc-deliverable">
-                                    <div class="proc-deliverable-dot"></div>
-                                    <span>30-day post-launch support window</span>
-                                </div>
-                                <div class="proc-deliverable">
-                                    <div class="proc-deliverable-dot"></div>
-                                    <span>Scale roadmap for growth</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-
-        <!-- ── 60-Day Timeline ── -->
-        <div class="proc-section alt">
-            <div class="wrapper-1160px">
-                <div class="proc-section-header centered">
-                    <div class="proc-section-eyebrow">Week by Week</div>
-                    <h2 class="proc-section-title">Your <span class="highlight-text">60-day</span> roadmap</h2>
-                    <p class="proc-section-sub">Exactly what happens at every stage — so you're never left wondering where your product is.</p>
-                </div>
-
-                <div class="proc-timeline-track">
-                    <div class="proc-week">
-                        <div class="proc-week-node proc-week-node-1">Wk 1</div>
-                        <div class="proc-week-eyebrow">Discovery</div>
-                        <div class="proc-week-title">Consult &amp; Plan</div>
-                        <div class="proc-week-tasks">
-                            <div class="proc-week-task">Kickoff call</div>
-                            <div class="proc-week-task">Scope lock</div>
-                            <div class="proc-week-task">Architecture draft</div>
-                            <div class="proc-week-task">Sprint planning</div>
-                        </div>
-                    </div>
-                    <div class="proc-week">
-                        <div class="proc-week-node proc-week-node-2">Wk 2–5</div>
-                        <div class="proc-week-eyebrow">Build Phase 1</div>
-                        <div class="proc-week-title">Core Features</div>
-                        <div class="proc-week-tasks">
-                            <div class="proc-week-task">Database &amp; APIs</div>
-                            <div class="proc-week-task">Auth &amp; core flows</div>
-                            <div class="proc-week-task">Weekly demos</div>
-                            <div class="proc-week-task">Feedback loops</div>
-                        </div>
-                    </div>
-                    <div class="proc-week">
-                        <div class="proc-week-node proc-week-node-3">Wk 6–8</div>
-                        <div class="proc-week-eyebrow">Build Phase 2</div>
-                        <div class="proc-week-title">Polish &amp; QA</div>
-                        <div class="proc-week-tasks">
-                            <div class="proc-week-task">UI refinement</div>
-                            <div class="proc-week-task">Automated tests</div>
-                            <div class="proc-week-task">Performance tuning</div>
-                            <div class="proc-week-task">Security review</div>
-                        </div>
-                    </div>
-                    <div class="proc-week">
-                        <div class="proc-week-node proc-week-node-4">Wk 9</div>
-                        <div class="proc-week-eyebrow">Launch</div>
-                        <div class="proc-week-title">Ship &amp; Monitor</div>
-                        <div class="proc-week-tasks">
-                            <div class="proc-week-task">Production deploy</div>
-                            <div class="proc-week-task">Monitoring live</div>
-                            <div class="proc-week-task">Handover docs</div>
-                            <div class="proc-week-task">Growth roadmap</div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+
+
 
         <!-- ── Why It Works ── -->
         <div class="proc-section">
