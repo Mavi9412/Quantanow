@@ -475,21 +475,22 @@
                     }
                 }, 30000);
 
+                // 5. Determine Backend URL
+                const isLocal = window.location.hostname === 'localhost' ||
+                               window.location.hostname === '127.0.0.1' ||
+                               window.location.hostname === '' ||
+                               window.location.hostname.startsWith('192.168.') ||
+                               window.location.hostname.endsWith('.local');
+
+                const backendUrl = isLocal
+                    ? 'http://localhost:3000/api'
+                    : '/api'; // Integrated with Firebase Hosting rewrites
+
+                console.log(`Connecting to backend at: ${backendUrl}`);
+
                 try {
-                    // 5. POST form data to backend — get signed URL + overrides back
-                    const isLocal = window.location.hostname === 'localhost' ||
-                                   window.location.hostname === '127.0.0.1' ||
-                                   window.location.hostname === '' ||
-                                   window.location.hostname.startsWith('192.168.') ||
-                                   window.location.hostname.endsWith('.local');
-
-                    const backendUrl = isLocal
-                        ? 'http://localhost:3000'
-                        : '/api'; // Integrated with Firebase Hosting rewrites
-
-                    console.log(`Connecting to backend at: ${backendUrl}`);
-
-                    const response = await fetch(`${backendUrl}/api/start-demo`, {
+                    // 6. POST form data to backend — get signed URL + overrides back
+                    const response = await fetch(`${backendUrl}/start-demo`, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify(config)
