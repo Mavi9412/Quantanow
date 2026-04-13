@@ -17,6 +17,18 @@ app.get('/', (req, res) => {
   res.json({ status: 'ok', message: 'QuantaNow AI Agent Backend is running' });
 });
 
+// Debug middleware to log internal paths in Cloud Logs
+app.use((req, res, next) => {
+  console.log(`[REQ] ${req.method} ${req.url} (Original: ${req.originalUrl})`);
+  next();
+});
+
+// Debug middleware to log internal paths in Cloud Logs
+app.use((req, res, next) => {
+  console.log(`[REQ] ${req.method} ${req.url} (Original: ${req.originalUrl})`);
+  next();
+});
+
 const limiter = rateLimit({
   windowMs: 60 * 1000,
   max: 5,
@@ -25,13 +37,17 @@ const limiter = rateLimit({
 
 app.use(cors({ origin: '*' }));
 app.use(express.json());
-app.use(express.static(path.join(__dirname, '..')));
+
+// Skip static files when running as a function
+if (!process.env.FUNCTION_NAME) {
+  app.use(express.static(path.join(__dirname, '..')));
+}
 
 // Sanitize user input
 const clean = (str) => String(str || '').replace(/[<>"'\/\\]/g, '').slice(0, 300);
 
-// POST endpoint — receives form data, sends overrides to ElevenLabs, returns signed URL
-app.post('/api/start-demo', limiter, async (req, res) => {
+// POST endpoint — handles both /api/start-demo and /start-demo
+app.post(['/api/start-demo', '/start-demo'], limiter, async (req, res) => {
   console.log(`\n[${new Date().toISOString()}] POST /api/start-demo`);
   console.log('  Body:', JSON.stringify(req.body, null, 2));
   try {
