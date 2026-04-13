@@ -3919,7 +3919,7 @@ a.contact-info-value:hover {
 .aia-agent-card.bento-large { grid-column: span 2; grid-row: span 2; background: radial-gradient(circle at top right, rgba(0, 232, 135, 0.12), transparent 70%), rgba(255, 255, 255, 0.04); }
 .aia-agent-card.bento-wide { grid-column: span 2; }
 .aia-agent-icon-wrap { width: 56px; height: 56px; background: rgba(255, 255, 255, 0.05); border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 28px; margin-bottom: 24px; }
-.aia-agent-title { font-size: 24px; font-weight: 700; margin-bottom: 12px; font-family: var(--font-accent); }
+.aia-agent-title { font-size: 24px; font-weight: 700; margin-bottom: 12px; font-family: var(--font-accent); color: #fff; }
 .aia-agent-desc { font-size: 15px; color: rgba(255, 255, 255, 0.6); line-height: 1.6; margin-bottom: 20px; }
 .aia-agent-features { list-style: none; padding: 0; margin-top: auto; }
 .aia-agent-features li { display: flex; align-items: center; gap: 8px; font-size: 14px; color: rgba(255, 255, 255, 0.8); margin-bottom: 8px; }
@@ -3928,7 +3928,9 @@ a.contact-info-value:hover {
 .aia-steps-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; margin-top: 60px; }
 .aia-step { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.06); border-radius: 28px; padding: 48px 32px; transition: all 0.3s ease; }
 .aia-step:hover { background: rgba(255, 255, 255, 0.05); border-color: rgba(37, 99, 235, 0.4); }
-.aia-step-number { font-size: 72px; font-weight: 800; font-family: var(--font-accent); line-height: 1; margin-bottom: 24px; background: linear-gradient(135deg, rgba(255, 255, 255, 0.15), transparent); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+.aia-step-number { font-size: 72px; font-weight: 800; font-family: var(--font-accent); line-height: 1; margin-bottom: 24px; background: linear-gradient(135deg, #00E887, #2563EB); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+.aia-step-title { font-size: 1.05rem; font-weight: 700; color: #fff; margin-bottom: 10px; }
+.aia-step-desc { font-size: 0.88rem; color: rgba(255, 255, 255, 0.65); line-height: 1.65; margin: 0; }
 .aia-step:hover .aia-step-number { background: var(--gradient-primary); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
 @media (max-width: 991px) { .aia-agents-grid, .aia-steps-grid { grid-template-columns: repeat(2, 1fr); } .aia-agent-card.bento-large, .aia-agent-card.bento-wide { grid-column: span 2; } }
 @media (max-width: 767px) { .aia-agents-grid, .aia-steps-grid { grid-template-columns: 1fr; } .aia-agent-card.bento-large, .aia-agent-card.bento-wide { grid-column: span 1; } }

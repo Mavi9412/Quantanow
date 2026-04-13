@@ -26,6 +26,281 @@
     <link
         href="https://cdn.prod.website-files.com/63b6f12d12456beab4f8cd2f/63b70b6166247a30da73b37f_My_project_1_256x256.jpg"
         rel="apple-touch-icon" />
+
+    <style>
+        /* =============================================
+           INDUSTRIES PAGE — LIGHT THEME
+           Matches site color system.
+        ============================================= */
+
+        /* ── Hero industry badges ── */
+        .ind-badges {
+            display: flex;
+            gap: 10px;
+            margin-top: 36px;
+            flex-wrap: wrap;
+        }
+        .ind-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 18px;
+            background: #ffffff;
+            border: 1.5px solid #e2e8f0;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #374151;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            transition: border-color 0.25s, transform 0.25s, box-shadow 0.25s;
+        }
+        .ind-badge:hover {
+            border-color: #00E887;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 18px rgba(0,232,135,0.15);
+        }
+        .ind-badge-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #00E887, #2563EB);
+            flex-shrink: 0;
+        }
+
+        /* ── Section layout ── */
+        .ind-section {
+            padding: 90px 0;
+        }
+        .ind-section.alt {
+            background: #f8fafc;
+        }
+        .ind-section-eyebrow {
+            font-size: 0.78rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.4px;
+            color: #00C473;
+            margin-bottom: 12px;
+        }
+        .ind-section-title {
+            font-size: clamp(1.9rem, 3.2vw, 2.75rem);
+            font-weight: 800;
+            color: #111827;
+            letter-spacing: -1px;
+            line-height: 1.14;
+            margin-bottom: 16px;
+        }
+        .ind-section-sub {
+            font-size: 1.08rem;
+            color: #6b7280;
+            line-height: 1.72;
+            max-width: 560px;
+        }
+        .ind-section-header {
+            margin-bottom: 60px;
+        }
+        .ind-section-header.centered {
+            text-align: center;
+        }
+        .ind-section-header.centered .ind-section-sub {
+            margin: 0 auto;
+        }
+
+        /* ── Industry cards grid ── */
+        .ind-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+        }
+        .ind-card {
+            background: #ffffff;
+            border: 1px solid #e6ebf2;
+            border-radius: 22px;
+            padding: 36px 28px;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1),
+                        box-shadow 0.3s ease,
+                        border-color 0.3s ease;
+            cursor: default;
+        }
+        .ind-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #00E887, #2563EB);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .ind-card:hover {
+            transform: translateY(-7px);
+            box-shadow: 0 24px 54px rgba(16,24,40,0.12);
+            border-color: #c5d4e6;
+        }
+        .ind-card:hover::before {
+            opacity: 1;
+        }
+        .ind-card.featured {
+            grid-column: span 2;
+            background: linear-gradient(135deg, #1f2937 0%, #080c14 100%);
+            border-color: transparent;
+        }
+        .ind-card.featured::before {
+            opacity: 1;
+        }
+        .ind-card-emoji {
+            width: 58px;
+            height: 58px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.6rem;
+            margin-bottom: 20px;
+            background: linear-gradient(145deg, #f4f7fb, #ffffff);
+            border: 1px solid #e5ecf5;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+            transition: transform 0.3s ease;
+        }
+        .ind-card.featured .ind-card-emoji {
+            background: rgba(255,255,255,0.08);
+            border-color: rgba(255,255,255,0.12);
+        }
+        .ind-card:hover .ind-card-emoji {
+            transform: scale(1.1) rotate(4deg);
+        }
+        .ind-card-eyebrow {
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            color: #00C473;
+            margin-bottom: 8px;
+        }
+        .ind-card.featured .ind-card-eyebrow {
+            color: #00E887;
+        }
+        .ind-card-title {
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: #111827;
+            letter-spacing: -0.4px;
+            margin-bottom: 10px;
+            line-height: 1.2;
+        }
+        .ind-card.featured .ind-card-title {
+            color: #ffffff;
+            font-size: 1.5rem;
+        }
+        .ind-card-desc {
+            font-size: 0.92rem;
+            color: #6b7280;
+            line-height: 1.7;
+        }
+        .ind-card.featured .ind-card-desc {
+            color: rgba(255,255,255,0.72);
+            font-size: 0.97rem;
+        }
+        .ind-card-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-top: 18px;
+        }
+        .ind-tag {
+            font-size: 0.72rem;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 999px;
+            background: linear-gradient(135deg, rgba(0,232,135,0.08), rgba(37,99,235,0.06));
+            border: 1px solid rgba(0,232,135,0.2);
+            color: #059669;
+        }
+        .ind-card.featured .ind-tag {
+            background: rgba(255,255,255,0.08);
+            border-color: rgba(255,255,255,0.15);
+            color: rgba(255,255,255,0.7);
+        }
+
+        /* ── How we approach section ── */
+        .ind-approach-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            margin-top: 0;
+        }
+        .ind-approach-card {
+            background: #ffffff;
+            border: 1px solid #e6ebf2;
+            border-radius: 18px;
+            padding: 32px 28px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .ind-approach-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 16px 40px rgba(0,0,0,0.08);
+        }
+        .ind-approach-num {
+            font-size: 2rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #00E887, #2563EB);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1;
+            margin-bottom: 14px;
+        }
+        .ind-approach-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #111827;
+            margin-bottom: 10px;
+        }
+        .ind-approach-desc {
+            font-size: 0.92rem;
+            color: #6b7280;
+            line-height: 1.68;
+        }
+
+        /* ── Responsive ── */
+        @media screen and (max-width: 1100px) {
+            .ind-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            .ind-card.featured {
+                grid-column: span 3;
+            }
+        }
+        @media screen and (max-width: 991px) {
+            .ind-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .ind-card.featured {
+                grid-column: span 2;
+            }
+            .ind-approach-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .ind-section {
+                padding: 60px 0;
+            }
+        }
+        @media screen and (max-width: 767px) {
+            .ind-grid {
+                grid-template-columns: 1fr;
+            }
+            .ind-card.featured {
+                grid-column: span 1;
+            }
+            .ind-approach-grid {
+                grid-template-columns: 1fr;
+            }
+            .ind-badges {
+                gap: 8px;
+            }
+        }
+    </style>
 </head>
 
 <body class="body">
@@ -63,112 +338,158 @@
             <div class="wrapper-1160px">
                 <div class="inner-hero-content">
                     <div class="breadcrumb">Home / Industries</div>
-                    <h1 class="inner-page-title">AI solutions built for <span class="highlight-text">your
-                            industry</span></h1>
+                    <h1 class="inner-page-title">AI solutions built for <span class="highlight-text">your industry</span></h1>
                     <p class="inner-page-subtitle">From healthcare to fintech, we bring deep industry knowledge and
                         technical expertise to solve your most complex challenges.</p>
-                    <div class="industry-count">8+ Industries Served</div>
+                    <div class="ind-badges">
+                        <div class="ind-badge"><div class="ind-badge-dot"></div>Healthcare</div>
+                        <div class="ind-badge"><div class="ind-badge-dot"></div>FinTech</div>
+                        <div class="ind-badge"><div class="ind-badge-dot"></div>Education</div>
+                        <div class="ind-badge"><div class="ind-badge-dot"></div>Real Estate</div>
+                        <div class="ind-badge"><div class="ind-badge-dot"></div>Hospitality</div>
+                        <div class="ind-badge"><div class="ind-badge-dot"></div>Media</div>
+                        <div class="ind-badge"><div class="ind-badge-dot"></div>Travel</div>
+                        <div class="ind-badge"><div class="ind-badge-dot"></div>Insurance</div>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <!-- Industries Section -->
-        <div class="industries-section">
-            <div class="wrapper-1160px industries-flex">
-                <div class="industries-text-container">
-                    <h2 class="h2-heading-56px">Industries we serve with AI-powered innovation</h2>
-                    <div class="body-1-20px" style="margin-top: 24px;">We understand the unique challenges, compliance
-                        requirements, and growth opportunities across diverse sectors.</div>
+        <!-- Industries Grid -->
+        <div class="ind-section">
+            <div class="wrapper-1160px">
+                <div class="ind-section-header">
+                    <div class="ind-section-eyebrow">Industries We Serve</div>
+                    <h2 class="ind-section-title">Domain expertise across 8+ verticals</h2>
+                    <p class="ind-section-sub">We understand the unique compliance requirements, growth opportunities, and user expectations across diverse sectors.</p>
                 </div>
-                <div class="w-layout-grid industries-grid">
-                    <div id="w-node-_7b40b23b-0f05-f4c9-9494-e3d641de67e0-d12aa27f" class="growth-grid-card">
-                        <div class="growth-card-image-container">
-                            <img src="https://cdn.prod.website-files.com/63b6f12d12456beab4f8cd2f/63bda2e21e4fb72fff0eeddc_Healthcare.jpg"
-                                loading="lazy" alt="" class="growth-image" />
-                        </div>
-                        <div class="growth-card-text-container">
-                            <div class="h3-heading-36px">Healthcare</div>
-                            <div class="body-2---18px margin-top-20px">HIPAA-compliant platforms, telemedicine
-                                solutions, patient portals, and AI-driven diagnostics built for modern healthcare
-                                providers.</div>
-                        </div>
-                    </div>
-                    <div id="w-node-_7b40b23b-0f05-f4c9-9494-e3d641de67e8-d12aa27f" class="growth-grid-card">
-                        <div class="growth-card-image-container">
-                            <img src="https://cdn.prod.website-files.com/63b6f12d12456beab4f8cd2f/63bda2e2f8aeef1e31a4f8fc_Real%20Estate.jpg"
-                                loading="lazy" alt="" class="growth-image" />
-                        </div>
-                        <div class="growth-card-text-container">
-                            <div class="h3-heading-36px">Real Estate</div>
-                            <div class="body-2---18px margin-top-20px">Property management systems, listing platforms,
-                                virtual tours, and automated lead generation for agents and agencies.</div>
+                <div class="ind-grid">
+
+                    <!-- Healthcare (featured) -->
+                    <div class="ind-card featured">
+                        <div class="ind-card-emoji">🏥</div>
+                        <div class="ind-card-eyebrow">Most Requested</div>
+                        <div class="ind-card-title">Healthcare</div>
+                        <p class="ind-card-desc">HIPAA-compliant platforms, telemedicine solutions, patient portals, and AI-driven diagnostics built for modern healthcare providers. We navigate complex regulatory environments so you can focus on patient outcomes.</p>
+                        <div class="ind-card-tags">
+                            <span class="ind-tag">HIPAA Compliant</span>
+                            <span class="ind-tag">Telemedicine</span>
+                            <span class="ind-tag">AI Diagnostics</span>
+                            <span class="ind-tag">Patient Portals</span>
                         </div>
                     </div>
-                    <div id="w-node-_7b40b23b-0f05-f4c9-9494-e3d641de67f0-d12aa27f" class="growth-grid-card">
-                        <div class="growth-card-image-container">
-                            <img src="https://cdn.prod.website-files.com/63b6f12d12456beab4f8cd2f/63bda2e2c57c17f5aeef3c72_Education.jpg"
-                                loading="lazy" alt="" class="growth-image" />
-                        </div>
-                        <div class="growth-card-text-container">
-                            <div class="h3-heading-36px">Education</div>
-                            <div class="body-2---18px margin-top-20px">LMS platforms, student portals, AI tutoring,
-                                course management, and adaptive learning tools for modern education.</div>
-                        </div>
-                    </div>
-                    <div id="w-node-_7b40b23b-0f05-f4c9-9494-e3d641de67f8-d12aa27f" class="growth-grid-card">
-                        <div class="growth-card-image-container">
-                            <img src="https://cdn.prod.website-files.com/63b6f12d12456beab4f8cd2f/63bda2e349e43f698e6b8d55_Fintech.jpg"
-                                loading="lazy" alt="" class="growth-image" />
-                        </div>
-                        <div class="growth-card-text-container">
-                            <div class="h3-heading-36px">FinTech</div>
-                            <div class="body-2---18px margin-top-20px">Banking apps, payment gateways, investment
-                                platforms, fraud detection, and compliance-ready financial tools.</div>
+
+                    <!-- FinTech -->
+                    <div class="ind-card">
+                        <div class="ind-card-emoji">💳</div>
+                        <div class="ind-card-eyebrow">Industry</div>
+                        <div class="ind-card-title">FinTech</div>
+                        <p class="ind-card-desc">Banking apps, payment gateways, investment platforms, fraud detection, and compliance-ready financial tools.</p>
+                        <div class="ind-card-tags">
+                            <span class="ind-tag">PCI-DSS</span>
+                            <span class="ind-tag">Fraud Detection</span>
                         </div>
                     </div>
-                    <div id="w-node-_7b40b23b-0f05-f4c9-9494-e3d641de6800-d12aa27f" class="growth-grid-card">
-                        <div class="growth-card-image-container">
-                            <img src="https://cdn.prod.website-files.com/63b6f12d12456beab4f8cd2f/63bda2e3ca61b05d93ec1e8e_Hospitality.jpg"
-                                loading="lazy" alt="" class="growth-image" />
-                        </div>
-                        <div class="growth-card-text-container">
-                            <div class="h3-heading-36px">Hospitality</div>
-                            <div class="body-2---18px margin-top-20px">Booking systems, guest management, POS
-                                integration, and customer experience tools for hotels and restaurants.</div>
-                        </div>
-                    </div>
-                    <div id="w-node-_7b40b23b-0f05-f4c9-9494-e3d641de6808-d12aa27f" class="growth-grid-card">
-                        <div class="growth-card-image-container">
-                            <img src="https://cdn.prod.website-files.com/63b6f12d12456beab4f8cd2f/63bda2e2bae29e45a5dae6dc_Media%20%26%20Entertainment.jpg"
-                                loading="lazy" alt="" class="growth-image" />
-                        </div>
-                        <div class="growth-card-text-container">
-                            <div class="h3-heading-36px">Media & Entertainment</div>
-                            <div class="body-2---18px margin-top-20px">Streaming platforms, content management, audience
-                                analytics, and engagement tools built for scale and speed.</div>
+
+                    <!-- Education -->
+                    <div class="ind-card">
+                        <div class="ind-card-emoji">🎓</div>
+                        <div class="ind-card-eyebrow">Industry</div>
+                        <div class="ind-card-title">Education</div>
+                        <p class="ind-card-desc">LMS platforms, student portals, AI tutoring, course management, and adaptive learning tools for modern education.</p>
+                        <div class="ind-card-tags">
+                            <span class="ind-tag">LMS</span>
+                            <span class="ind-tag">AI Tutoring</span>
                         </div>
                     </div>
-                    <div id="w-node-_7b40b23b-0f05-f4c9-9494-e3d641de6810-d12aa27f" class="growth-grid-card">
-                        <div class="growth-card-image-container">
-                            <img src="https://cdn.prod.website-files.com/63b6f12d12456beab4f8cd2f/63bda2e2f8aeef4eb8a4f8f9_Travel.jpg"
-                                loading="lazy" alt="" class="growth-image" />
-                        </div>
-                        <div class="growth-card-text-container">
-                            <div class="h3-heading-36px">Travel</div>
-                            <div class="body-2---18px margin-top-20px">Booking engines, itinerary builders,
-                                recommendation systems, and trip planning tools powered by AI.</div>
+
+                    <!-- Real Estate -->
+                    <div class="ind-card">
+                        <div class="ind-card-emoji">🏘️</div>
+                        <div class="ind-card-eyebrow">Industry</div>
+                        <div class="ind-card-title">Real Estate</div>
+                        <p class="ind-card-desc">Property management systems, listing platforms, virtual tours, and automated lead generation for agents and agencies.</p>
+                        <div class="ind-card-tags">
+                            <span class="ind-tag">Virtual Tours</span>
+                            <span class="ind-tag">Lead Gen</span>
                         </div>
                     </div>
-                    <div id="w-node-_7b40b23b-0f05-f4c9-9494-e3d641de6818-d12aa27f" class="growth-grid-card">
-                        <div class="growth-card-image-container">
-                            <img src="https://cdn.prod.website-files.com/63b6f12d12456beab4f8cd2f/63bda2e2b21a0c8821a8ff31_Insurance.jpg"
-                                loading="lazy" alt="" class="growth-image" />
+
+                    <!-- Hospitality -->
+                    <div class="ind-card">
+                        <div class="ind-card-emoji">🏨</div>
+                        <div class="ind-card-eyebrow">Industry</div>
+                        <div class="ind-card-title">Hospitality</div>
+                        <p class="ind-card-desc">Booking systems, guest management, POS integration, and customer experience tools for hotels and restaurants.</p>
+                        <div class="ind-card-tags">
+                            <span class="ind-tag">Booking</span>
+                            <span class="ind-tag">POS</span>
                         </div>
-                        <div class="growth-card-text-container">
-                            <div class="h3-heading-36px">Insurance</div>
-                            <div class="body-2---18px margin-top-20px">Policy management, claims processing automation,
-                                risk assessment tools, and customer self-service portals.</div>
+                    </div>
+
+                    <!-- Media & Entertainment -->
+                    <div class="ind-card">
+                        <div class="ind-card-emoji">🎬</div>
+                        <div class="ind-card-eyebrow">Industry</div>
+                        <div class="ind-card-title">Media & Entertainment</div>
+                        <p class="ind-card-desc">Streaming platforms, content management, audience analytics, and engagement tools built for scale and speed.</p>
+                        <div class="ind-card-tags">
+                            <span class="ind-tag">Streaming</span>
+                            <span class="ind-tag">Analytics</span>
                         </div>
+                    </div>
+
+                    <!-- Travel -->
+                    <div class="ind-card">
+                        <div class="ind-card-emoji">✈️</div>
+                        <div class="ind-card-eyebrow">Industry</div>
+                        <div class="ind-card-title">Travel</div>
+                        <p class="ind-card-desc">Booking engines, itinerary builders, recommendation systems, and trip planning tools powered by AI.</p>
+                        <div class="ind-card-tags">
+                            <span class="ind-tag">Booking Engine</span>
+                            <span class="ind-tag">AI Reco</span>
+                        </div>
+                    </div>
+
+                    <!-- Insurance -->
+                    <div class="ind-card">
+                        <div class="ind-card-emoji">🛡️</div>
+                        <div class="ind-card-eyebrow">Industry</div>
+                        <div class="ind-card-title">Insurance</div>
+                        <p class="ind-card-desc">Policy management, claims processing automation, risk assessment tools, and customer self-service portals.</p>
+                        <div class="ind-card-tags">
+                            <span class="ind-tag">Claims Auto</span>
+                            <span class="ind-tag">Risk AI</span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- Our Approach -->
+        <div class="ind-section alt">
+            <div class="wrapper-1160px">
+                <div class="ind-section-header centered">
+                    <div class="ind-section-eyebrow">Our Approach</div>
+                    <h2 class="ind-section-title">How we deliver industry-specific AI solutions</h2>
+                    <p class="ind-section-sub">We don't apply a generic template — we build from deep understanding of your sector's rules, users, and growth levers.</p>
+                </div>
+                <div class="ind-approach-grid">
+                    <div class="ind-approach-card">
+                        <div class="ind-approach-num">01</div>
+                        <div class="ind-approach-title">Domain Discovery</div>
+                        <p class="ind-approach-desc">We start with a deep-dive into your industry's compliance landscape, user expectations, and competitive dynamics before writing a single line of code.</p>
+                    </div>
+                    <div class="ind-approach-card">
+                        <div class="ind-approach-num">02</div>
+                        <div class="ind-approach-title">Compliance-First Build</div>
+                        <p class="ind-approach-desc">From HIPAA to PCI-DSS, we architect solutions that meet regulatory requirements without compromising on performance or user experience.</p>
+                    </div>
+                    <div class="ind-approach-card">
+                        <div class="ind-approach-num">03</div>
+                        <div class="ind-approach-title">AI Integration Layer</div>
+                        <p class="ind-approach-desc">We embed AI agents, predictive models, and automation tools tailored to your industry's specific workflows — not generic chatbots.</p>
                     </div>
                 </div>
             </div>
@@ -203,14 +524,11 @@
                     <div class="social-media-bottom-container">
                         <div class="footer-bold-text-14px">Social Media</div>
                         <div class="social-media-container">
-                            
-                            
                             <a href="https://www.linkedin.com/company/quantanow/" target="_blank"
                                 rel="noreferrer noopener" class="social-media-wrapper w-inline-block">
                                 <img src="https://cdn.prod.website-files.com/63b6f12d12456beab4f8cd2f/63b6f12e12456ba3b6f8cd99_Linkedin.svg"
                                     loading="lazy" width="20" alt="LinkedIn" class="social-media-icon" />
                             </a>
-                            
                         </div>
                     </div>
                 </div>
@@ -257,12 +575,6 @@
     <script src="https://d3e54v103j8qbb.cloudfront.net/js/jquery-3.5.1.min.dc5e7f18c8.js?site=63b6f12d12456beab4f8cd2f"
         type="text/javascript" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0="
         crossorigin="anonymous"></script>
-    <script src="https://cdn.prod.website-files.com/63b6f12d12456beab4f8cd2f/js/webflow.schunk.90690657670f5b00.js"
-        type="text/javascript"></script>
-    <script src="https://cdn.prod.website-files.com/63b6f12d12456beab4f8cd2f/js/webflow.schunk.75be47074eb74dc1.js"
-        type="text/javascript"></script>
-    <script src="https://cdn.prod.website-files.com/63b6f12d12456beab4f8cd2f/js/webflow.7f63baad.55c6fdaf7034cea0.js"
-        type="text/javascript"></script>
     <script src="section-overrides.js"></script>
 </body>
 
