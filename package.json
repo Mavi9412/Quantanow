@@ -34,16 +34,13 @@
     "not dead"
   ],
   "engines": {
-    "node": ">=14.0.0"
+    "node": ">=18"
   },
   "dependencies": {
-    "firebase": "^12.11.0",
     "cors": "^2.8.6",
-    "dotenv": "^17.4.1",
-    "express": "^5.2.1",
-    "express-rate-limit": "^8.3.2",
-    "node-fetch": "^2.7.0",
-    "firebase-functions": "^6.3.2",
-    "firebase-admin": "^13.1.0"
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "express-rate-limit": "^7.5.0",
+    "node-fetch": "^2.7.0"
   }
 }
