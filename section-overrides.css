@@ -396,6 +396,7 @@
 
 .footer-text-link-16px {
   font-size: 1.02rem;
+  color: #1a1a1a !important; /* Force black for white background */
   transition: color 0.25s ease, transform 0.25s ease;
   display: inline-block;
   font-weight: 500;
