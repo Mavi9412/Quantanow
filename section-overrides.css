@@ -3995,3 +3995,51 @@ a.contact-info-value:hover {
   z-index: 1000;
 }
 
+/* Post-Call Summary Box */
+.aia-summary-container {
+  margin-top: 32px;
+  padding: 28px;
+  background: rgba(255, 255, 255, 0.05); /* Deep dark background */
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  text-align: left;
+  animation: aia-fade-up 0.6s ease-out;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.aia-summary-title {
+  font-size: 14px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: #00E887;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.aia-summary-text {
+  font-size: 17px;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.9);
+  font-family: inherit;
+}
+
+.aia-summary-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 15px;
+  margin-top: 20px;
+}
+
+@keyframes aia-fade-up {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+

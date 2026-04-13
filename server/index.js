@@ -96,6 +96,41 @@ Rules:
   }
 });
 
+// GET /api/summary/:conversationId — returns transcript summary from ElevenLabs
+app.get('/api/summary/:conversationId', async (req, res) => {
+  const { conversationId } = req.params;
+  const API_KEY = process.env.ELEVENLABS_API_KEY;
+
+  if (!API_KEY) {
+    return res.status(500).json({ error: 'Server configuration error: missing API key' });
+  }
+
+  console.log(`[${new Date().toISOString()}] GET /api/summary/${conversationId}`);
+
+  try {
+    const response = await fetch(
+      `https://api.elevenlabs.io/v1/convai/conversations/${conversationId}`,
+      { method: 'GET', headers: { 'xi-api-key': API_KEY } }
+    );
+
+    if (!response.ok) {
+      const err = await response.json().catch(() => ({}));
+      return res.status(response.status).json({ error: 'Failed to fetch summary', details: err });
+    }
+
+    const data = await response.json();
+    
+    // ElevenLabs provides the summary in the 'analysis' object
+    const summary = data.analysis?.transcript_summary || 'No summary available for this call.';
+    
+    res.json({ conversationId, summary });
+
+  } catch (error) {
+    console.error('Summary fetch error:', error.message);
+    res.status(500).json({ error: 'Failed to fetch call summary' });
+  }
+});
+
 // Fallback: serve HTML pages by name, or index.html
 app.use((req, res) => {
   if (req.path.startsWith('/api')) {
