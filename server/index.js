@@ -1,4 +1,5 @@
 const express = require('express');
+const functions = require('firebase-functions');
 const cors = require('cors');
 const fetch = require('node-fetch');
 const rateLimit = require('express-rate-limit');
@@ -125,9 +126,15 @@ app.get('/api/get-signed-url', limiter, async (_req, res) => {
   }
 });
 
-app.listen(PORT, '0.0.0.0', () => {
-  console.log(`
-✅ QuantaNow AI Agent backend running on port ${PORT}
-🚀 Open: http://localhost:${PORT}/ai-agents.html
-  `);
-});
+// 0.0.0.0 is used for Cloud Run, but for Firebase Functions we export the app
+if (process.env.NODE_ENV !== 'production' && !process.env.FUNCTION_NAME) {
+  app.listen(PORT, '0.0.0.0', () => {
+    console.log(`
+  ✅ QuantaNow AI Agent backend running on port ${PORT}
+  🚀 Open: http://localhost:${PORT}/ai-agents.html
+    `);
+  });
+}
+
+// Export the Express app as a Firebase Function
+exports.api = functions.https.onRequest(app);
