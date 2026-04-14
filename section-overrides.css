@@ -2955,9 +2955,8 @@ a.contact-info-value:hover {
   font-size: 0.75rem;
 }
 
-/* ---- HERO CARD: CS Agent (spans 2 cols, light with green accent) ---- */
+/* ---- HERO CARD: CS Agent ---- */
 .aia-agent-card--hero {
-  grid-column: span 2;
   background: #ffffff;
   border-color: rgba(0, 232, 135, 0.3);
   box-shadow: 0 4px 20px rgba(0, 232, 135, 0.08), 0 1px 4px rgba(0,0,0,0.06);
@@ -3032,11 +3031,6 @@ a.contact-info-value:hover {
   font-weight: 500;
 }
 
-/* ---- VOICE CARD (wide — spans 2 cols) ---- */
-.aia-agent-card--wide {
-  grid-column: span 2;
-}
-
 /* ---- VOICE CARD styling ---- */
 .aia-agent-card--voice {
   border-color: rgba(0, 232, 135, 0.2);
@@ -3063,10 +3057,6 @@ a.contact-info-value:hover {
   pointer-events: none;
 }
 
-/* ---- LAST CARD: Reporting (spans 2 cols to fill row 3) ---- */
-.aia-agent-card--last {
-  grid-column: span 2;
-}
 
 /* ---- HOW IT WORKS ---- */
 .aia-how-section {
@@ -3089,9 +3079,10 @@ a.contact-info-value:hover {
 .aia-how-section .aia-section-heading { color: #ffffff; }
 .aia-how-section .aia-section-subheading { color: rgba(255, 255, 255, 0.5); }
 
-/* Timeline steps: 4-column grid, no connecting line complexity */
+/* Timeline: horizontal numbered steps with connecting line */
 .aia-timeline {
   position: relative;
+  margin-top: 60px;
 }
 
 .aia-timeline-line { display: none; }
@@ -3099,7 +3090,20 @@ a.contact-info-value:hover {
 .aia-timeline-steps {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 20px;
+  gap: 32px;
+  position: relative;
+}
+
+/* Horizontal connector line through all nodes */
+.aia-timeline-steps::before {
+  content: '';
+  position: absolute;
+  top: 26px; /* half of node height */
+  left: 32px; /* half of node width */
+  right: 32px;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.12);
+  z-index: 0;
 }
 
 .aia-timeline-step {
@@ -3108,90 +3112,49 @@ a.contact-info-value:hover {
   gap: 0;
 }
 
-/* Number node above the card */
+/* Number node */
 .aia-timeline-node {
-  width: 52px;
+  width: 64px;
   height: 52px;
-  border-radius: 14px;
-  background: linear-gradient(135deg, rgba(0, 232, 135, 0.12), rgba(37, 99, 235, 0.12));
-  border: 1px solid rgba(0, 232, 135, 0.25);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.15);
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 16px;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  margin-bottom: 28px;
+  position: relative;
+  z-index: 1;
+  transition: border-color 0.3s ease, background 0.3s ease;
+}
+
+.aia-timeline-step:hover .aia-timeline-node {
+  border-color: rgba(0, 232, 135, 0.4);
+  background: rgba(0, 232, 135, 0.06);
 }
 
 .aia-timeline-node span {
-  font-size: 1rem;
+  font-size: 0.95rem;
   font-weight: 800;
   background: linear-gradient(135deg, #00E887, #2563EB);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  letter-spacing: -0.5px;
-}
-
-.aia-timeline-step:hover .aia-timeline-node {
-  transform: scale(1.05);
-  box-shadow: 0 0 20px rgba(0, 232, 135, 0.25);
-}
-
-/* Card below the node */
-.aia-timeline-card {
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.07);
-  border-radius: 18px;
-  padding: 24px 22px;
-  flex: 1;
-  transition: background 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
-}
-
-.aia-timeline-step:hover .aia-timeline-card {
-  background: rgba(255, 255, 255, 0.07);
-  border-color: rgba(0, 232, 135, 0.18);
-  transform: translateY(-3px);
-}
-
-.aia-timeline-icon {
-  width: 40px;
-  height: 40px;
-  border-radius: 10px;
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #00E887;
-  margin-bottom: 12px;
-}
-
-.aia-timeline-tag {
-  display: inline-block;
-  padding: 3px 9px;
-  background: rgba(0, 232, 135, 0.1);
-  border: 1px solid rgba(0, 232, 135, 0.2);
-  color: #00E887;
-  font-size: 0.68rem;
-  font-weight: 700;
   letter-spacing: 0.5px;
-  border-radius: 50px;
-  margin-bottom: 10px;
-  text-transform: uppercase;
 }
 
 .aia-timeline-title {
-  font-size: 1rem;
+  font-size: 1.05rem;
   font-weight: 700;
   color: #ffffff;
-  margin-bottom: 8px;
+  margin-bottom: 12px;
   line-height: 1.3;
 }
 
 .aia-timeline-desc {
-  font-size: 0.855rem;
+  font-size: 0.875rem;
   color: rgba(255, 255, 255, 0.5);
-  line-height: 1.68;
+  line-height: 1.7;
   margin: 0;
 }
 
@@ -3474,6 +3437,10 @@ a.contact-info-value:hover {
     grid-template-columns: repeat(2, 1fr);
   }
 
+  .aia-timeline-steps::before {
+    display: none;
+  }
+
   .aia-benefits-inner {
     grid-template-columns: 1fr;
     gap: 50px;
@@ -3539,7 +3506,11 @@ a.contact-info-value:hover {
 
   .aia-timeline-steps {
     grid-template-columns: 1fr 1fr;
-    gap: 14px;
+    gap: 24px;
+  }
+
+  .aia-timeline-steps::before {
+    display: none;
   }
 
   .aia-tech-grid {
