@@ -2320,7 +2320,7 @@ a.contact-info-value:hover {
 
 .aia-section-subheading {
   font-size: 1.1rem;
-  color: #64748b;
+  color: #4b5563;
   line-height: 1.7;
   max-width: 580px;
   margin: 0 auto;
@@ -2927,7 +2927,7 @@ a.contact-info-value:hover {
 
 .aia-agent-desc {
   font-size: 0.9rem;
-  color: #64748b;
+  color: #4b5563;
   line-height: 1.65;
   margin-bottom: 18px;
   flex-grow: 1;
@@ -2945,7 +2945,7 @@ a.contact-info-value:hover {
 
 .aia-agent-features li {
   font-size: 0.84rem;
-  color: #475569;
+  color: #374151;
   font-weight: 500;
   padding-left: 20px;
   position: relative;
@@ -3644,13 +3644,28 @@ a.contact-info-value:hover {
   font-size: 0.82rem;
   font-weight: 500;
   color: #475569;
+  cursor: default;
+  transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+}
+
+.aia-channel-pill:hover {
+  background: #e8f0f8;
+  border-color: #c5d4e6;
+  color: #1e40af;
+  transform: translateY(-1px);
 }
 
 .aia-channel-pill.aia-channel-voice {
   background: rgba(0, 232, 135, 0.1);
   border-color: rgba(0, 232, 135, 0.3);
-  color: #00E887;
+  color: #00955a;
   font-weight: 600;
+}
+
+.aia-channel-pill.aia-channel-voice:hover {
+  background: rgba(0, 232, 135, 0.18);
+  border-color: rgba(0, 232, 135, 0.5);
+  color: #00E887;
 }
 
 /* Voice card variants now defined in AGENT CARDS section above */
