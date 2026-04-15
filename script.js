@@ -6,16 +6,32 @@ const newsletterForm = document.querySelector('#email-form-2');
 
 // Mobile navigation toggle
 navToggle?.addEventListener('click', () => {
-    navMenu.classList.toggle('active');
-    navToggle.classList.toggle('active');
+    const isOpen = navMenu.classList.contains('active');
+    if (isOpen) {
+        navMenu.classList.remove('active', 'w--open');
+        navToggle.classList.remove('active', 'w--open');
+    } else {
+        navMenu.classList.add('active', 'w--open');
+        navToggle.classList.add('active', 'w--open');
+    }
 });
 
 // Close mobile menu when clicking on links
-document.querySelectorAll('.nav-link').forEach(link => {
+document.querySelectorAll('.nav-link, .black-nav-links').forEach(link => {
     link.addEventListener('click', () => {
-        navMenu.classList.remove('active');
-        navToggle.classList.remove('active');
+        navMenu.classList.remove('active', 'w--open');
+        navToggle.classList.remove('active', 'w--open');
     });
+});
+
+// Close menu when clicking outside
+document.addEventListener('click', (e) => {
+    if (navMenu && navToggle) {
+        if (!navMenu.contains(e.target) && !navToggle.contains(e.target)) {
+            navMenu.classList.remove('active', 'w--open');
+            navToggle.classList.remove('active', 'w--open');
+        }
+    }
 });
 
 // Navbar scroll effect
