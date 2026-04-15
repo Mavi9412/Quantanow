@@ -3098,17 +3098,23 @@ a.contact-info-value:hover {
   font-size: 0.82rem;
   color: #374151;
   font-weight: 500;
-  padding-left: 18px;
-  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  line-height: 1.5;
 }
 
 .aia-agent-features li::before {
   content: "✓";
-  position: absolute;
-  left: 0;
   color: #00C473;
-  font-weight: 700;
-  font-size: 0.75rem;
+  font-weight: 800;
+  font-size: 0.85rem;
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
 /* ---- HERO CARD: CS Agent ---- */
@@ -4416,6 +4422,13 @@ img {
 .ind-section {
   padding: 80px 0;
   background: #ffffff;
+}
+
+/* Force the wrapper inside ind-section to stack header above grid */
+.ind-section > .wrapper-1160px {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: stretch !important;
 }
 
 .ind-section.alt {
