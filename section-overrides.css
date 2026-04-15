@@ -4531,7 +4531,11 @@ a.contact-info-value:hover {
     flex-direction: column !important;
     gap: 40px !important;
   }
+  .contact-right-container {
+    padding: 28px !important;
+  }
 }
+
 
 /* Global Polish */
 #scroll-to-top {
@@ -6048,21 +6052,66 @@ img {
    CONTACT PAGE — SMALL SCREEN FIXES
    ======================================== */
 
-@media screen and (max-width: 767px) {
-  .contact-right-container {
-    padding: 28px 20px !important;
-  }
+/* Force box-sizing on all form inputs so padding doesn't cause overflow */
+.contact-text-field,
+.contact-textarea,
+.w-input.contact-text-field,
+.w-select.contact-text-field {
+  box-sizing: border-box !important;
+  max-width: 100% !important;
+}
 
+@media screen and (max-width: 991px) {
+  .contact-flex {
+    gap: 40px !important;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .contact-section {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+  .contact-flex {
+    flex-direction: column !important;
+    gap: 32px !important;
+  }
+  .contact-right-container {
+    padding: 24px 20px !important;
+    border-radius: 16px !important;
+  }
+  .contact-left-container,
+  .contact-heading-container {
+    padding-right: 0 !important;
+  }
+  .contact-form-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .contact-text-field,
+  .contact-textarea {
+    font-size: 16px !important;
+    width: 100% !important;
+  }
   .contact-submit-button {
     width: 100% !important;
     text-align: center !important;
     padding: 16px 24px !important;
+    box-sizing: border-box !important;
+  }
+  .contact-quick-info {
+    flex-direction: column !important;
+    gap: 6px !important;
+    align-items: center !important;
   }
 }
 
 @media screen and (max-width: 479px) {
   .contact-right-container {
-    padding: 24px 16px !important;
+    padding: 20px 14px !important;
+  }
+  .contact-text-field,
+  .contact-textarea {
+    padding: 12px 14px !important;
   }
 }
 

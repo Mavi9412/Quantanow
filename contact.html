@@ -232,6 +232,72 @@
     <script src="https://cdn.prod.website-files.com/63b6f12d12456beab4f8cd2f/js/webflow.7f63baad.55c6fdaf7034cea0.js"
         type="text/javascript"></script>
     <script src="section-overrides.js"></script>
+
+    <!-- ============================================================
+         Firebase Contact Form Handler
+         Saves submission to Firestore 'mail' collection so the
+         "Trigger Email" Firebase Extension auto-sends the alert.
+    ============================================================ -->
+    <script type="module">
+      import { collection, addDoc } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-firestore.js";
+      import { db } from "./firebase-config.js";
+
+      const form        = document.getElementById("contact-form");
+      const successBox  = document.querySelector(".contact-success-message");
+      const errorBox    = document.querySelector(".contact-error-message");
+      const submitBtn   = form.querySelector('input[type="submit"]');
+
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        // Read all form fields
+        const name    = form.name.value.trim();
+        const email   = form.email.value.trim();
+        const phone   = form.phone.value.trim();
+        const company = form.company.value.trim();
+        const service = form.service.value;
+        const message = form.message.value.trim();
+
+        // Disable button while sending
+        submitBtn.value    = "Sending…";
+        submitBtn.disabled = true;
+
+        try {
+          // Write to Firestore 'mail' collection
+          // The Firebase "Trigger Email" extension picks this up automatically
+          await addDoc(collection(db, "mail"), {
+            to: "support@quantanow.com",
+            message: {
+              subject: `New Inquiry from ${name} — QuantaNow Website`,
+              html: `
+                <h2 style="color:#0f172a">New Contact Form Submission</h2>
+                <table cellpadding="8" style="border-collapse:collapse;width:100%;max-width:560px">
+                  <tr><td style="font-weight:600;width:130px">Name</td><td>${name}</td></tr>
+                  <tr><td style="font-weight:600">Email</td><td><a href="mailto:${email}">${email}</a></td></tr>
+                  <tr><td style="font-weight:600">Phone</td><td>${phone || "—"}</td></tr>
+                  <tr><td style="font-weight:600">Company</td><td>${company || "—"}</td></tr>
+                  <tr><td style="font-weight:600">Service</td><td>${service || "—"}</td></tr>
+                  <tr><td style="font-weight:600;vertical-align:top">Message</td><td style="white-space:pre-wrap">${message}</td></tr>
+                </table>
+                <p style="margin-top:24px;color:#6b7280;font-size:13px">Sent from quantanow.com contact form</p>
+              `
+            }
+          });
+
+          // Show success state
+          form.style.display        = "none";
+          successBox.style.display  = "block";
+          errorBox.style.display    = "none";
+          form.reset();
+
+        } catch (err) {
+          console.error("Firestore write failed:", err);
+          errorBox.style.display    = "block";
+          submitBtn.value           = "Send Message";
+          submitBtn.disabled        = false;
+        }
+      });
+    </script>
 </body>
 
 </html>
