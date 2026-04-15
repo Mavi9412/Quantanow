@@ -147,7 +147,14 @@
                             <input type="submit" value="Send Message" class="contact-submit-button w-button" />
                         </form>
                         <div class="contact-success-message" style="display:none">
-                            <div>Thank you! Your message has been received. We'll get back to you within 24 hours.</div>
+                            <div class="contact-success-inner">
+                                <div class="contact-success-icon">✓</div>
+                                <h3 class="contact-success-title">Message Sent!</h3>
+                                <p class="contact-success-text">
+                                    Thank you! Your message has been received.<br/>
+                                    We'll get back to you within 24 hours.
+                                </p>
+                            </div>
                         </div>
                         <div class="contact-error-message" style="display:none">
                             <div>Oops! Something went wrong while submitting the form. Please try again.</div>
@@ -290,7 +297,9 @@
           form.reset();
 
         } catch (err) {
-          console.error("Firestore write failed:", err);
+          console.error("Firestore write failed:", err.code, err.message);
+          errorBox.querySelector("div").textContent =
+            "Error: " + (err.message || err.code || "Unknown error");
           errorBox.style.display    = "block";
           submitBtn.value           = "Send Message";
           submitBtn.disabled        = false;
