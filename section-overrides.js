@@ -1,45 +1,4 @@
-// ============================================
-//  Mobile Navigation Hamburger Toggle
-//  Fallback in case Webflow JS doesn't bind
-// ============================================
-(function () {
-    var menuBtn = document.querySelector('.w-nav-button, .menu-button');
-    var navMenu = document.querySelector('.w-nav-menu');
-    var navbar  = document.querySelector('.black-navbar');
-
-    if (!menuBtn || !navMenu || !navbar) return;
-
-    function openMenu() {
-        navMenu.classList.add('w--open', 'active');
-        menuBtn.classList.add('w--open');
-        menuBtn.setAttribute('aria-expanded', 'true');
-        navbar.style.zIndex = '1000';
-    }
-
-    function closeMenu() {
-        navMenu.classList.remove('w--open', 'active');
-        menuBtn.classList.remove('w--open');
-        menuBtn.setAttribute('aria-expanded', 'false');
-    }
-
-    menuBtn.addEventListener('click', function (e) {
-        e.stopPropagation();
-        var isOpen = navMenu.classList.contains('w--open');
-        isOpen ? closeMenu() : openMenu();
-    });
-
-    // Close on outside click
-    document.addEventListener('click', function (e) {
-        if (!navbar.contains(e.target)) {
-            closeMenu();
-        }
-    });
-
-    // Close when a nav link is tapped
-    navMenu.querySelectorAll('a').forEach(function (link) {
-        link.addEventListener('click', closeMenu);
-    });
-})();
+// Mobile Navigation Hamburger Toggle is handled by script.js (state-based).
 
 // ============================================
 //  Section Overrides — Scroll-to-Top Button

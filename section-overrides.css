@@ -38,59 +38,24 @@
 }
 
 /* ===== MOBILE NAV MENU (Hamburger) ===== */
-/* Webflow uses w--open class when nav is open */
-.black-navbar.w--open .w-nav-menu,
-.w-nav-menu.w--open {
-  display: flex !important;
-  flex-direction: column;
-  position: absolute;
-  top: 100%;
-  left: 0;
-  right: 0;
-  background: #ffffff;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
-  padding: 16px 0;
-  z-index: 999;
-  border-top: 1px solid rgba(0, 0, 0, 0.08);
-  animation: navSlideDown 0.3s ease;
-}
+/* Open state is driven entirely by inline styles set in script.js (state-based toggle).
+   These rules style the links inside the fullscreen overlay when it's open. */
 
-.w-nav-menu.w--open .black-nav-links,
-.w-nav-menu.active .black-nav-links {
-  display: block !important;
-  padding: 14px 28px;
+.w-nav-menu .black-nav-links {
+  display: block;
+  width: 100%;
+  padding: 16px 0;
   color: #111 !important;
   font-weight: 600;
-  font-size: 1rem;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  font-size: 1.2rem;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.07);
   transition: background 0.2s ease, color 0.2s ease;
+  text-decoration: none;
 }
 
-.w-nav-menu.w--open .black-nav-links:hover,
-.w-nav-menu.active .black-nav-links:hover {
-  background: rgba(0, 232, 135, 0.08);
-  color: #000 !important;
-}
-
-/* Also handle script.js active class toggle */
-.w-nav-menu.active {
-  display: flex !important;
-  flex-direction: column;
-  position: absolute;
-  top: 100%;
-  left: 0;
-  right: 0;
-  background: #ffffff;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
-  padding: 16px 0;
-  z-index: 999;
-  border-top: 1px solid rgba(0, 0, 0, 0.08);
-  animation: navSlideDown 0.3s ease;
-}
-
-@keyframes navSlideDown {
-  from { opacity: 0; transform: translateY(-8px); }
-  to   { opacity: 1; transform: translateY(0); }
+.w-nav-menu .black-nav-links:hover {
+  color: #00E887 !important;
+  background: transparent;
 }
 
 /* Ensure .black-navbar is positioned for the dropdown */
@@ -515,6 +480,7 @@
   padding: 70px 0 0;
 }
 
+/* Pages links — always a visible flex column, no screen size exceptions */
 .footer-sub-grid {
   display: flex !important;
   flex-direction: column !important;
@@ -522,6 +488,7 @@
   list-style: none;
   padding: 0;
   margin: 0;
+  width: 100% !important;
 }
 
 .footer-sub-grid a {
@@ -532,6 +499,7 @@
 
 .footer-center-grid {
   display: block !important;
+  visibility: visible !important;
 }
 
 .footer-links-wrapper {
@@ -539,11 +507,18 @@
   visibility: visible !important;
 }
 
+.footer-center-wrapper {
+  display: block !important;
+  visibility: visible !important;
+}
+
 .footer-text-link-16px {
+  display: block !important;        /* was inline-block without !important — could be overridden */
+  visibility: visible !important;
+  opacity: 1 !important;
   font-size: 1.02rem;
-  color: #1a1a1a !important; /* Force black for white background */
+  color: #1a1a1a !important;
   transition: color 0.25s ease, transform 0.25s ease;
-  display: inline-block;
   font-weight: 500;
 }
 
@@ -5685,16 +5660,31 @@ img {
   .footer-left-wrapper,
   .footer-center-wrapper,
   .footer-right-wrapper {
+    display: block !important;      /* ensure none of these are hidden */
+    visibility: visible !important;
     flex: none !important;
     width: 100% !important;
   }
 
+  /* Explicit display: flex here — the base rule covers it but belt-and-suspenders
+     ensures the 767px cascade never drops back to Webflow's display: grid */
   .footer-sub-grid {
+    display: flex !important;
     flex-direction: column !important;
     gap: 8px !important;
+    width: 100% !important;
+  }
+
+  .footer-center-grid,
+  .footer-links-wrapper {
+    display: block !important;
+    visibility: visible !important;
+    width: 100% !important;
   }
 
   .footer-text-link-16px {
+    display: block !important;
+    visibility: visible !important;
     font-size: 0.9rem !important;
   }
 
@@ -5713,6 +5703,7 @@ img {
     display: flex !important;
     flex-direction: column !important;
     gap: 10px !important;
+    width: 100% !important;
   }
 
   .footer-links-wrapper,
@@ -5721,6 +5712,7 @@ img {
     display: block !important;
     visibility: visible !important;
     opacity: 1 !important;
+    width: 100% !important;
   }
 
   .footer-text-link-16px {
@@ -5728,6 +5720,7 @@ img {
     visibility: visible !important;
     opacity: 1 !important;
     color: #1a1a1a !important;
+    width: 100% !important;
   }
 
   .footer-form {

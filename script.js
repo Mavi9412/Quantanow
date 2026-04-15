@@ -4,32 +4,55 @@ const navToggle = document.querySelector('.menu-button');
 const navMenu = document.querySelector('.w-nav-menu');
 const newsletterForm = document.querySelector('#email-form-2');
 
-// Mobile navigation toggle
-navToggle?.addEventListener('click', () => {
-    const isOpen = navMenu.classList.contains('active');
-    if (isOpen) {
-        navMenu.classList.remove('active', 'w--open');
-        navToggle.classList.remove('active', 'w--open');
+// Mobile navigation — state-based toggle
+let menuOpen = false;
+
+const setMenuOpen = (val) => {
+    menuOpen = val;
+
+    if (menuOpen) {
+        // Conditionally render nav: apply fullscreen overlay inline styles
+        navMenu.style.cssText = [
+            'display: flex',
+            'flex-direction: column',
+            'align-items: flex-start',
+            'position: fixed',
+            'top: 0',
+            'left: 0',
+            'width: 100%',
+            'height: 100vh',
+            'z-index: 9999',
+            'background: white',
+            'padding: 100px 32px 32px',
+            'gap: 4px',
+            'overflow-y: auto',
+        ].join(';');
+        navToggle.setAttribute('aria-expanded', 'true');
+        document.body.style.overflow = 'hidden';
     } else {
-        navMenu.classList.add('active', 'w--open');
-        navToggle.classList.add('active', 'w--open');
+        // Un-render nav: remove inline styles, restore default hidden state
+        navMenu.removeAttribute('style');
+        navToggle.setAttribute('aria-expanded', 'false');
+        document.body.style.overflow = '';
     }
+};
+
+// Attach onClick to hamburger button
+navToggle?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    setMenuOpen(!menuOpen);
 });
 
-// Close mobile menu when clicking on links
+// Close when a nav link is clicked
 document.querySelectorAll('.nav-link, .black-nav-links').forEach(link => {
-    link.addEventListener('click', () => {
-        navMenu.classList.remove('active', 'w--open');
-        navToggle.classList.remove('active', 'w--open');
-    });
+    link.addEventListener('click', () => setMenuOpen(false));
 });
 
-// Close menu when clicking outside
+// Close when clicking outside the menu
 document.addEventListener('click', (e) => {
-    if (navMenu && navToggle) {
+    if (menuOpen && navMenu && navToggle) {
         if (!navMenu.contains(e.target) && !navToggle.contains(e.target)) {
-            navMenu.classList.remove('active', 'w--open');
-            navToggle.classList.remove('active', 'w--open');
+            setMenuOpen(false);
         }
     }
 });
