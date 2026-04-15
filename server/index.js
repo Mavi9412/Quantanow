@@ -119,11 +119,15 @@ app.get('/api/summary/:conversationId', async (req, res) => {
     }
 
     const data = await response.json();
-    
-    // ElevenLabs provides the summary in the 'analysis' object
-    const summary = data.analysis?.transcript_summary || 'No summary available for this call.';
-    
-    res.json({ conversationId, summary });
+
+    // Return structured data for rich client-side rendering
+    res.json({
+      conversationId,
+      summary:         data.analysis?.transcript_summary || null,
+      duration:        data.metadata?.call_duration_secs  || null,
+      transcript:      data.transcript                    || [],
+      dataCollection:  data.analysis?.data_collection_results || {}
+    });
 
   } catch (error) {
     console.error('Summary fetch error:', error.message);
