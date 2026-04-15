@@ -394,6 +394,16 @@
   padding: 70px 0 0;
 }
 
+.footer-sub-grid {
+  display: grid !important;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px 16px;
+}
+
+.footer-center-grid {
+  display: grid !important;
+}
+
 .footer-text-link-16px {
   font-size: 1.02rem;
   color: #1a1a1a !important; /* Force black for white background */
