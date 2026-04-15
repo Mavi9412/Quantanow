@@ -627,13 +627,10 @@
             }
 
             async function fetchSummary(convId) {
-                const loadingEl = document.getElementById('aia-summary-loading');
+                const loadingEl   = document.getElementById('aia-summary-loading');
                 const loadingText = loadingEl ? loadingEl.querySelector('span') : null;
 
                 if (loadingEl) loadingEl.style.display = 'flex';
-
-                // Initial wait for ElevenLabs to finalize
-                await new Promise(r => setTimeout(r, 4000));
 
                 const isLocal = window.location.hostname === 'localhost' ||
                                window.location.hostname === '127.0.0.1' ||
@@ -642,41 +639,49 @@
                                window.location.hostname.endsWith('.local');
                 const backendUrl = isLocal ? 'http://localhost:3000/api' : '/api';
 
+                // Helper — hide loader and show whatever we have
+                function showSummary(raw) {
+                    summaryData = parseSummaryData(raw || { conversationId: convId });
+                    if (loadingEl) loadingEl.style.display = 'none';
+                    renderInlineSummary(summaryData);
+                }
+
                 let attempts = 0;
-                const maxAttempts = 10; // ~30-40s total
+                const maxAttempts = 5; // max ~20s total
+
+                // Initial wait for ElevenLabs to finalize transcript
+                await new Promise(r => setTimeout(r, 3000));
 
                 async function poll() {
                     try {
                         const res = await fetch(`${backendUrl}/summary/${convId}`);
+
                         if (!res.ok) {
-                            if (res.status === 404) throw new Error('NotReady');
-                            throw new Error('APIError');
+                            throw new Error(res.status === 404 ? 'NotReady' : 'APIError');
                         }
+
                         const data = await res.json();
-                        if (!data.summary && data.transcript.length === 0) throw new Error('Empty');
-                        
-                        summaryData = parseSummaryData(data);
-                        if (loadingEl) loadingEl.style.display = 'none';
-                        renderInlineSummary(summaryData);
+
+                        // Show whatever we got — even partial data is fine
+                        showSummary(data);
+
                     } catch (e) {
                         attempts++;
-                        if (attempts === 4 && loadingText) {
-                            loadingText.textContent = "Finalizing AI report...";
+                        if (loadingText) {
+                            loadingText.textContent = attempts >= 3
+                                ? "Almost done..."
+                                : "Analyzing your call...";
                         }
-                        if (attempts === 7 && loadingText) {
-                            loadingText.textContent = "Almost there — preparing analysis...";
-                        }
-                        
+
                         if (attempts < maxAttempts) {
-                            return setTimeout(poll, 3500);
+                            return setTimeout(poll, 4000);
                         }
-                        
-                        // Fail gracefully
-                        summaryData = parseSummaryData({ conversationId: convId });
-                        if (loadingEl) loadingEl.style.display = 'none';
-                        renderInlineSummary(summaryData);
+
+                        // All attempts failed — show fallback with duration from timer
+                        showSummary({ conversationId: convId });
                     }
                 }
+
                 poll();
             }
 
@@ -690,16 +695,32 @@
                 const txText = transcript.map(t => t.message || '').join(' ').toLowerCase();
                 const all    = lower + ' ' + txText;
 
-                // Duration
+                // Duration — use API value or fall back to elapsed timer
                 let durationStr = 'N/A';
                 if (raw.duration) {
                     const m = Math.floor(raw.duration / 60), s = Math.round(raw.duration % 60);
                     durationStr = m > 0 ? `${m}m ${s}s` : `${s}s`;
+                } else {
+                    // Try to read how long the call actually ran from the timer
+                    const elapsed = 60 - (parseInt((document.getElementById('call-timer') || {}).textContent?.split(':')[1]) || 60);
+                    if (elapsed > 0) {
+                        const m = Math.floor(elapsed / 60), s = elapsed % 60;
+                        durationStr = m > 0 ? `${m}m ${s}s` : `${s}s`;
+                    }
                 }
 
-                // Split summary into sentences
+                // Split summary into sentences; fall back to transcript snippets
                 const sentences = summary.split(/(?<=[.!?])\s+/).map(s => s.trim()).filter(s => s.length > 8);
-                const purpose   = sentences[0] || 'The AI is still processing the full transcript. High-level details may be available soon.';
+                let purpose = sentences[0];
+                if (!purpose && transcript.length > 0) {
+                    // Build a short purpose from AI messages in transcript
+                    const aiLines = transcript
+                        .filter(t => t.role === 'agent' || t.role === 'assistant')
+                        .map(t => t.message || '')
+                        .join(' ');
+                    purpose = aiLines.slice(0, 180) || 'Call completed successfully.';
+                }
+                purpose = purpose || 'Call completed successfully.';
                 const topics    = sentences.slice(1, 5).filter(s => s.length > 12);
 
                 // Sentiment
