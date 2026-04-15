@@ -101,19 +101,18 @@
 
                 </div>
                 <div class="contact-right-container">
-                    <div class="contact-form-block w-form">
-                        <form id="contact-form" name="contact-form" method="post" class="contact-form"
-                            data-name="Contact Form">
+                    <div class="contact-form-block">
+                        <form id="contact-form" name="contact-form" class="contact-form">
                             <div class="contact-form-grid">
                                 <div class="contact-input-wrapper">
                                     <label for="name" class="contact-label">Full Name *</label>
                                     <input class="contact-text-field w-input" maxlength="256" name="name"
-                                        placeholder="John Doe" type="text" id="name" required="" />
+                                        placeholder="John Doe" type="text" id="name" required />
                                 </div>
                                 <div class="contact-input-wrapper">
                                     <label for="email" class="contact-label">Email Address *</label>
                                     <input class="contact-text-field w-input" maxlength="256" name="email"
-                                        placeholder="john@company.com" type="email" id="email" required="" />
+                                        placeholder="john@company.com" type="email" id="email" required />
                                 </div>
                                 <div class="contact-input-wrapper">
                                     <label for="phone" class="contact-label">Phone Number</label>
@@ -131,7 +130,7 @@
                                         <option value="">Select a service</option>
                                         <option value="web-development">Web Development</option>
                                         <option value="saas-platforms">SaaS Platforms</option>
-                                        <option value="qa-testing">QA & Testing</option>
+                                        <option value="qa-testing">QA &amp; Testing</option>
                                         <option value="ai-solutions">AI Solutions</option>
                                         <option value="mobile-apps">Mobile Apps</option>
                                         <option value="api-development">API Development</option>
@@ -142,15 +141,15 @@
                                     <label for="message" class="contact-label">Tell us about your project *</label>
                                     <textarea id="message" name="message"
                                         placeholder="Describe your project, goals, and timeline..." maxlength="5000"
-                                        class="contact-textarea w-input" required=""></textarea>
+                                        class="contact-textarea w-input" required></textarea>
                                 </div>
                             </div>
                             <input type="submit" value="Send Message" class="contact-submit-button w-button" />
                         </form>
-                        <div class="contact-success-message w-form-done">
+                        <div class="contact-success-message" style="display:none">
                             <div>Thank you! Your message has been received. We'll get back to you within 24 hours.</div>
                         </div>
-                        <div class="contact-error-message w-form-fail">
+                        <div class="contact-error-message" style="display:none">
                             <div>Oops! Something went wrong while submitting the form. Please try again.</div>
                         </div>
                     </div>
