@@ -8,12 +8,12 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.0/firebas
 import { getFirestore } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-firestore.js";
 
 const firebaseConfig = {
-  apiKey:            "YOUR_API_KEY",
+  apiKey:            "AIzaSyCYFUv1q0ZrCpL8LUcpnbP6yVnqNfeqQ08",
   authDomain:        "quantnow-website.firebaseapp.com",
   projectId:         "quantnow-website",
-  storageBucket:     "quantnow-website.appspot.com",
-  messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-  appId:             "YOUR_APP_ID"
+  storageBucket:     "quantnow-website.firebasestorage.app",
+  messagingSenderId: "290308679127",
+  appId:             "1:290308679127:web:2c00411e8822c27378d792"
 };
 
 const app = initializeApp(firebaseConfig);
