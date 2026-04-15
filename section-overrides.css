@@ -3086,15 +3086,18 @@ a.contact-info-value:hover {
 
 /* Features list */
 .aia-agent-features {
-  list-style: none;
+  list-style: none !important;
+  list-style-type: none !important;
   margin: 0;
-  padding: 0;
+  padding: 0 !important;
   display: flex;
   flex-direction: column;
   gap: 6px;
 }
 
 .aia-agent-features li {
+  list-style: none !important;
+  list-style-type: none !important;
   font-size: 0.82rem;
   color: #374151;
   font-weight: 500;
