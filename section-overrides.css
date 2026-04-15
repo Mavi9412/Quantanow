@@ -6317,3 +6317,121 @@ img {
   }
 }
 
+
+
+/* ========================================
+   AI AGENT DEMO — SUCCESS & SUMMARY UI
+   ======================================== */
+
+.aia-success-ui {
+  text-align: center;
+  padding: 40px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  animation: aia-fade-up 0.6s ease-out;
+}
+
+.aia-success-icon {
+  position: relative;
+  width: 100px;
+  height: 100px;
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  outline: none !important;
+  border: none !important;
+}
+
+.aia-success-ring {
+  position: absolute;
+  inset: 0;
+  border: 4px solid rgba(0, 232, 135, 0.15);
+  border-radius: 50%;
+  animation: success-pulse 2s infinite;
+}
+
+.aia-success-check {
+  width: 64px;
+  height: 64px;
+  background: rgba(0, 232, 135, 0.1);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+}
+
+@keyframes success-pulse {
+  0% { transform: scale(1); opacity: 1; }
+  100% { transform: scale(1.4); opacity: 0; }
+}
+
+.aia-summary-status {
+  margin-top: 24px;
+  padding: 16px;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 12px;
+  min-height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.aia-summary-loading {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: #94a3b8;
+  font-size: 0.95rem;
+}
+
+.aia-loading-spinner {
+  width: 18px;
+  height: 18px;
+  border: 2px solid rgba(0, 232, 135, 0.2);
+  border-top-color: #00E887;
+  border-radius: 50%;
+  animation: aia-spin 0.8s linear infinite;
+}
+
+.aia-view-summary-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 20px;
+  background: rgba(37, 99, 235, 0.1);
+  color: #2563EB;
+  border: 1px solid rgba(37, 99, 235, 0.2);
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  outline: none !important;
+}
+
+.aia-view-summary-btn:hover {
+  background: rgba(37, 99, 235, 0.15);
+  transform: translateY(-1px);
+}
+
+.aia-agent-card:focus,
+.aia-demo-btn:focus,
+.aia-end-call-btn:focus,
+.aia-view-summary-btn:focus {
+  outline: none !important;
+  box-shadow: 0 0 0 2px rgba(0, 232, 135, 0.4);
+}
+
+@keyframes aia-spin {
+  to { transform: rotate(360deg); }
+}
+
+
+.aia-visualizer, .aia-vis-bar {
+  border: none !important;
+  outline: none !important;
+}
+

@@ -537,22 +537,36 @@
                             clearTimeout(connectionTimeout);
                             statusText.textContent = "🟢 Live - AI is listening";
                             
-                            // Capture Conversation ID
-                            try {
-                                currentConversationId = conversation.getId();
-                                console.log("Call started. ID:", currentConversationId);
-                            } catch (e) {
-                                console.warn("Could not get conversation ID immediately");
-                            }
+                            // Capture ID with retry (SDK might take a sec)
+                            let idAttempts = 0;
+                            const captureId = () => {
+                                try {
+                                    const id = conversation.getId();
+                                    if (id) {
+                                        currentConversationId = id;
+                                        console.log("Call started. ID:", id);
+                                    } else if (idAttempts < 5) {
+                                        idAttempts++;
+                                        setTimeout(captureId, 1000);
+                                    }
+                                } catch(e) { /* ignore */ }
+                            };
+                            captureId();
                             
                             startTimer();
                         },
                         onDisconnect: (details) => {
                             stopTimer();
                             const wasConnected = callConnected;
-                            const finalConvId = currentConversationId;
                             
+                            // Final attempt to get ID if missing
+                            if (!currentConversationId && conversation) {
+                                try { currentConversationId = conversation.getId(); } catch(e){}
+                            }
+                            
+                            const finalConvId = currentConversationId;
                             conversation = null;
+                            
                             if (wasConnected) {
                                 showSuccess(finalConvId);
                             } else {
@@ -618,11 +632,13 @@
             async function fetchSummary(convId) {
                 const loadingEl = document.getElementById('aia-summary-loading');
                 const btnEl    = document.getElementById('aia-view-summary-btn');
+                const loadingText = loadingEl ? loadingEl.querySelector('span') : null;
+
                 if (loadingEl) loadingEl.style.display = 'flex';
                 if (btnEl)     btnEl.style.display = 'none';
 
-                // Give ElevenLabs a moment to finalize the transcript
-                await new Promise(r => setTimeout(r, 2500));
+                // Initial wait for ElevenLabs to finalize
+                await new Promise(r => setTimeout(r, 4000));
 
                 const isLocal = window.location.hostname === 'localhost' ||
                                window.location.hostname === '127.0.0.1' ||
@@ -632,21 +648,45 @@
                 const backendUrl = isLocal ? 'http://localhost:3000/api' : '/api';
 
                 let attempts = 0;
-                const maxAttempts = 4;
+                const maxAttempts = 10; // ~30-40s total
 
                 async function poll() {
                     try {
                         const res = await fetch(`${backendUrl}/summary/${convId}`);
-                        if (!res.ok) throw new Error('Retry');
-                        summaryData = parseSummaryData(await res.json());
+                        if (!res.ok) {
+                            if (res.status === 404) throw new Error('NotReady');
+                            throw new Error('APIError');
+                        }
+                        const data = await res.json();
+                        if (!data.summary && data.transcript.length === 0) throw new Error('Empty');
+                        
+                        summaryData = parseSummaryData(data);
+                        
+                        if (loadingEl) loadingEl.style.display = 'none';
+                        if (btnEl)     btnEl.style.display = 'inline-flex';
+                        openSummaryModal();
                     } catch (e) {
                         attempts++;
-                        if (attempts < maxAttempts) return setTimeout(poll, 3000);
+                        if (attempts === 4 && loadingText) {
+                            loadingText.textContent = "Finalizing AI report...";
+                        }
+                        if (attempts === 7 && loadingText) {
+                            loadingText.textContent = "Almost there — preparing analysis...";
+                        }
+                        
+                        if (attempts < maxAttempts) {
+                            return setTimeout(poll, 3500);
+                        }
+                        
+                        // Fail gracefully
                         summaryData = parseSummaryData({ conversationId: convId });
+                        if (loadingEl) loadingEl.style.display = 'none';
+                        if (btnEl) {
+                            btnEl.style.display = 'inline-flex';
+                            btnEl.innerHTML = `<span>&#9888;</span> Summary Partially Available`;
+                        }
+                        openSummaryModal();
                     }
-                    if (loadingEl) loadingEl.style.display = 'none';
-                    if (btnEl)     btnEl.style.display = 'inline-flex';
-                    openSummaryModal();
                 }
                 poll();
             }
@@ -670,7 +710,7 @@
 
                 // Split summary into sentences
                 const sentences = summary.split(/(?<=[.!?])\s+/).map(s => s.trim()).filter(s => s.length > 8);
-                const purpose   = sentences[0] || 'Not captured for this demo.';
+                const purpose   = sentences[0] || 'The AI is still processing the full transcript. High-level details may be available soon.';
                 const topics    = sentences.slice(1, 5).filter(s => s.length > 12);
 
                 // Sentiment
@@ -678,9 +718,9 @@
                 const neg = ['frustrated','angry','complaint','unhappy','unable','cannot','sorry','disappointed','unfortunately','failed'];
                 const posScore = pos.filter(w => all.includes(w)).length;
                 const negScore = neg.filter(w => all.includes(w)).length;
-                const sentiment = posScore > negScore ? 'Positive' : negScore > posScore ? 'Negative' : 'Neutral';
+                const sentiment = (posScore > 0 || negScore > 0) ? (posScore >= negScore ? 'Positive' : 'Negative') : 'Neutral';
 
-                // Action items — sentences that contain action-oriented language
+                // Action items 
                 const actionKw = [' will ',' would ','follow up','contact','send ','schedule','book ','arrange','call back','reach out'];
                 const actionItems = sentences.filter(s => actionKw.some(k => s.toLowerCase().includes(k))).slice(0, 3);
 
@@ -699,7 +739,7 @@
                 const unKw = ['unable','cannot',"don't know","not sure",'need to check','escalate','transfer','unfortunately'];
                 const unresolved = sentences.filter(s => unKw.some(k => s.toLowerCase().includes(k)));
 
-                // Customer info from ElevenLabs data_collection_results
+                // Customer info 
                 const nameK  = Object.keys(dc).find(k => /name/i.test(k));
                 const emailK = Object.keys(dc).find(k => /email/i.test(k));
                 const phoneK = Object.keys(dc).find(k => /phone|mobile|number/i.test(k));
