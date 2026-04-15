@@ -4,55 +4,59 @@ const navToggle = document.querySelector('.menu-button');
 const navMenu = document.querySelector('.w-nav-menu');
 const newsletterForm = document.querySelector('#email-form-2');
 
-// Mobile navigation — state-based toggle
-let menuOpen = false;
+// Mobile navigation — state-based toggle (mirrors React useState pattern)
+let isOpen = false;
 
-const setMenuOpen = (val) => {
-    menuOpen = val;
+const setIsOpen = (val) => {
+    isOpen = val;
 
-    if (menuOpen) {
-        // Conditionally render nav: apply fullscreen overlay inline styles
+    if (isOpen) {
+        // {isOpen && <div style={{...}}>} — apply fullscreen overlay
         navMenu.style.cssText = [
-            'display: flex',
-            'flex-direction: column',
-            'align-items: flex-start',
             'position: fixed',
             'top: 0',
             'left: 0',
-            'width: 100%',
+            'width: 100vw',
             'height: 100vh',
-            'z-index: 9999',
-            'background: white',
-            'padding: 100px 32px 32px',
-            'gap: 4px',
-            'overflow-y: auto',
+            'background-color: white',
+            'z-index: 9998',
+            'display: flex',
+            'flex-direction: column',
+            'align-items: center',
+            'justify-content: center',
+            'gap: 24px',
         ].join(';');
         navToggle.setAttribute('aria-expanded', 'true');
         document.body.style.overflow = 'hidden';
     } else {
-        // Un-render nav: remove inline styles, restore default hidden state
+        // {!isOpen} — remove overlay, restore default hidden state
         navMenu.removeAttribute('style');
         navToggle.setAttribute('aria-expanded', 'false');
         document.body.style.overflow = '';
     }
 };
 
-// Attach onClick to hamburger button
+// Hamburger button onClick + onTouchEnd — handles both mouse and real touch devices
 navToggle?.addEventListener('click', (e) => {
     e.stopPropagation();
-    setMenuOpen(!menuOpen);
+    setIsOpen(!isOpen);
+});
+
+navToggle?.addEventListener('touchend', (e) => {
+    e.preventDefault();
+    setIsOpen(!isOpen);
 });
 
 // Close when a nav link is clicked
 document.querySelectorAll('.nav-link, .black-nav-links').forEach(link => {
-    link.addEventListener('click', () => setMenuOpen(false));
+    link.addEventListener('click', () => setIsOpen(false));
 });
 
 // Close when clicking outside the menu
 document.addEventListener('click', (e) => {
-    if (menuOpen && navMenu && navToggle) {
+    if (isOpen && navMenu && navToggle) {
         if (!navMenu.contains(e.target) && !navToggle.contains(e.target)) {
-            setMenuOpen(false);
+            setIsOpen(false);
         }
     }
 });
