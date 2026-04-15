@@ -4451,6 +4451,18 @@ a.contact-info-value:hover {
   margin-left: 16px;
 }
 
+/* Hide mobile CTA from desktop nav, show only in mobile menu */
+.mobile-nav-cta {
+  display: none !important;
+}
+
+@media (max-width: 767px) {
+  .mobile-nav-cta {
+    display: inline-block !important;
+    align-self: flex-start;
+  }
+}
+
 /* === CONTACT PAGE REFINEMENTS === */
 .contact-hero {
   padding-bottom: 40px !important;
