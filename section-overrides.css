@@ -491,6 +491,13 @@
   width: 100% !important;
 }
 
+/* Safety net: prevent any li::before pseudo-element from injecting icons into footer links */
+.footer-sub-grid li::before,
+.footer-sub-grid li::after {
+  content: none !important;
+  display: none !important;
+}
+
 .footer-sub-grid a {
   display: block !important;
   visibility: visible !important;
@@ -544,6 +551,30 @@
 .social-media-wrapper:hover {
   transform: translateY(-4px) scale(1.08);
   background: rgba(0, 232, 135, 0.1);
+}
+
+@media (max-width: 767px) {
+  .social-media-bottom-container {
+    position: fixed;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 999;
+    background: #0f172a;
+    border-radius: 10px 0 0 10px;
+    padding: 10px 6px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    box-shadow: -2px 0 12px rgba(0,0,0,0.25);
+  }
+  .social-media-bottom-container .footer-bold-text-14px {
+    display: none;
+  }
+  .social-media-wrapper {
+    padding: 8px;
+  }
 }
 
 .copyright-text {
@@ -3099,6 +3130,8 @@ a.contact-info-value:hover {
 .aia-agent-features li {
   list-style: none !important;
   list-style-type: none !important;
+  background-image: none !important;
+  padding-left: 0 !important;
   font-size: 0.82rem;
   color: #374151;
   font-weight: 500;
