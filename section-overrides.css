@@ -3154,6 +3154,40 @@ a.contact-info-value:hover {
   justify-content: center;
 }
 
+/* ---- 5-card grid: 3 top + 2 centred bottom (Why Us core values) ---- */
+.wu-values-grid-5 {
+  grid-template-columns: repeat(6, 1fr) !important;
+}
+.wu-values-grid-5 .aia-agent-card:nth-child(1),
+.wu-values-grid-5 .aia-agent-card:nth-child(2),
+.wu-values-grid-5 .aia-agent-card:nth-child(3) {
+  grid-column: span 2;
+}
+.wu-values-grid-5 .aia-agent-card:nth-child(4) {
+  grid-column: 2 / span 2;
+}
+.wu-values-grid-5 .aia-agent-card:nth-child(5) {
+  grid-column: 4 / span 2;
+}
+
+@media (max-width: 991px) {
+  .wu-values-grid-5 {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+  .wu-values-grid-5 .aia-agent-card:nth-child(n) {
+    grid-column: span 1;
+  }
+}
+
+@media (max-width: 767px) {
+  .wu-values-grid-5 {
+    grid-template-columns: 1fr !important;
+  }
+  .wu-values-grid-5 .aia-agent-card:nth-child(n) {
+    grid-column: span 1;
+  }
+}
+
 /* ---- HERO CARD: CS Agent ---- */
 .aia-agent-card--hero {
   background: #ffffff;
