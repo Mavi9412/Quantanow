@@ -417,16 +417,13 @@
                             <h2 class="aia-demo-title">That's your AI!</h2>
                             <p class="aia-demo-subtitle">Imagine this level of automation working for your business 24/7.</p>
                             
-                            <!-- Summary Status -->
+                            <!-- Inline Call Summary -->
                             <div id="aia-summary-status" class="aia-summary-status">
                                 <div id="aia-summary-loading" class="aia-summary-loading" style="display:none">
                                     <div class="aia-loading-spinner"></div>
                                     <span>Analyzing your call...</span>
                                 </div>
-                                <button id="aia-view-summary-btn" class="aia-view-summary-btn" onclick="openSummaryModal()" style="display:none">
-                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><path d="M9 12h6M9 16h4"/></svg>
-                                    View Call Summary
-                                </button>
+                                <div id="aia-inline-summary" style="display:none"></div>
                             </div>
 
                             <div style="margin-top: 40px;">
@@ -631,11 +628,9 @@
 
             async function fetchSummary(convId) {
                 const loadingEl = document.getElementById('aia-summary-loading');
-                const btnEl    = document.getElementById('aia-view-summary-btn');
                 const loadingText = loadingEl ? loadingEl.querySelector('span') : null;
 
                 if (loadingEl) loadingEl.style.display = 'flex';
-                if (btnEl)     btnEl.style.display = 'none';
 
                 // Initial wait for ElevenLabs to finalize
                 await new Promise(r => setTimeout(r, 4000));
@@ -661,10 +656,8 @@
                         if (!data.summary && data.transcript.length === 0) throw new Error('Empty');
                         
                         summaryData = parseSummaryData(data);
-                        
                         if (loadingEl) loadingEl.style.display = 'none';
-                        if (btnEl)     btnEl.style.display = 'inline-flex';
-                        openSummaryModal();
+                        renderInlineSummary(summaryData);
                     } catch (e) {
                         attempts++;
                         if (attempts === 4 && loadingText) {
@@ -681,11 +674,7 @@
                         // Fail gracefully
                         summaryData = parseSummaryData({ conversationId: convId });
                         if (loadingEl) loadingEl.style.display = 'none';
-                        if (btnEl) {
-                            btnEl.style.display = 'inline-flex';
-                            btnEl.innerHTML = `<span>&#9888;</span> Summary Partially Available`;
-                        }
-                        openSummaryModal();
+                        renderInlineSummary(summaryData);
                     }
                 }
                 poll();
@@ -750,92 +739,36 @@
                 return { conversationId: raw.conversationId, duration: durationStr, purpose, topics, sentiment, actionItems, meetingBooked, meetingDetails, unresolved, customerName, contactInfo };
             }
 
-            // ── Render the parsed data into the modal body ────────────────────
-            function renderSummaryModal(d) {
-                const sc = {
-                    Positive: ['#00C473', 'rgba(0,196,115,0.12)', '↑ Positive'],
-                    Negative: ['#ef4444', 'rgba(239,68,68,0.12)',  '↓ Negative'],
-                    Neutral:  ['#f59e0b', 'rgba(245,158,11,0.12)', '→ Neutral']
-                }[d.sentiment] || ['#f59e0b','rgba(245,158,11,0.12)','→ Neutral'];
-
+            // ── Render summary inline (no modal) ─────────────────────────────
+            function renderInlineSummary(d) {
                 const esc = s => String(s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 
-                const icons = {
-                    clock:    '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>',
-                    user:     '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>',
-                    target:   '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>',
-                    list:     '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>',
-                    task:     '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>',
-                    calendar: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>',
-                    alert:    '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>'
-                };
+                const iconClock  = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>';
+                const iconTarget = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>';
+                const iconList   = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>';
 
-                const section = (ico, title, content) =>
-                    `<div class="csm-section"><div class="csm-section-header"><span class="csm-section-icon">${icons[ico]||''}</span><span class="csm-section-title">${title}</span></div>${content}</div>`;
+                const topicsHtml = d.topics && d.topics.length
+                    ? `<ul class="ais-list">${d.topics.map(i => `<li>${esc(i)}</li>`).join('')}</ul>`
+                    : `<p class="ais-empty">No specific topics captured.</p>`;
 
-                const listHtml = (items, empty) => items.length
-                    ? `<ul class="csm-list">${items.map(i => `<li>${esc(i)}</li>`).join('')}</ul>`
-                    : `<p class="csm-empty">${empty}</p>`;
-
-                const idEl = document.getElementById('csm-conv-id');
-                if (idEl && d.conversationId) idEl.textContent = 'ID: ' + d.conversationId.slice(0, 16) + '\u2026';
-
-                document.getElementById('csm-body').innerHTML = `
-                    <div class="csm-meta-row">
-                        <div class="csm-row">
-                            <div class="csm-row-icon">${icons.clock}</div>
-                            <div><div class="csm-row-label">Duration</div><div class="csm-row-value">${esc(d.duration)}</div></div>
+                const el = document.getElementById('aia-inline-summary');
+                if (!el) return;
+                el.innerHTML = `
+                    <div class="ais-wrap">
+                        <div class="ais-card">
+                            <div class="ais-card-header">${iconClock} Duration</div>
+                            <div class="ais-card-value">${esc(d.duration)}</div>
                         </div>
-                        ${d.customerName ? `<div class="csm-row"><div class="csm-row-icon">${icons.user}</div><div><div class="csm-row-label">Customer</div><div class="csm-row-value">${esc(d.customerName)}${d.contactInfo ? '<br><span class="csm-contact">' + esc(d.contactInfo) + '</span>' : ''}</div></div></div>` : ''}
-                        <div class="csm-sentiment-badge" style="background:${sc[1]};color:${sc[0]};border-color:${sc[0]}40">
-                            <div class="csm-sentiment-dot" style="background:${sc[0]}"></div>${sc[2]}
+                        <div class="ais-card">
+                            <div class="ais-card-header">${iconTarget} Purpose of Call</div>
+                            <div class="ais-card-value ais-purpose">${esc(d.purpose)}</div>
                         </div>
-                    </div>
-                    ${section('target', 'Purpose of Call', `<p class="csm-purpose-text">${esc(d.purpose)}</p>`)}
-                    ${section('list',   'Key Topics Discussed',       listHtml(d.topics,      'No specific topics captured.'))}
-                    ${section('task',   'Action Items / Next Steps',  listHtml(d.actionItems, 'No action items identified.'))}
-                    <div class="csm-section">
-                        <div class="csm-section-header">
-                            <span class="csm-section-icon">${icons.calendar}</span>
-                            <span class="csm-section-title">Meeting / Appointment Booked?</span>
+                        <div class="ais-card">
+                            <div class="ais-card-header">${iconList} Key Topics Discussed</div>
+                            ${topicsHtml}
                         </div>
-                        <span class="csm-meeting-badge ${d.meetingBooked ? 'csm-meeting-yes' : 'csm-meeting-no'}">
-                            ${d.meetingBooked ? '&#10003; Yes' : '&#10007; No'}
-                            ${d.meetingDetails ? '<span class="csm-meeting-time"> &mdash; ' + esc(d.meetingDetails) + '</span>' : ''}
-                        </span>
-                    </div>
-                    ${section('alert',  'Unresolved Issues', listHtml(d.unresolved, 'No unresolved issues detected.'))}
-                    <div class="csm-footer">
-                        <a href="/contact" class="csm-cta-btn">
-                            Build My Real Agent
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
-                        </a>
                     </div>`;
-            }
-
-            // ── Modal open / close ────────────────────────────────────────────
-            function openSummaryModal() {
-                const modal = document.getElementById('call-summary-modal');
-                if (!modal) return;
-                if (summaryData) renderSummaryModal(summaryData);
-                modal.style.display = 'flex';
-                // Double rAF ensures the display:flex is painted before the transition class fires
-                requestAnimationFrame(() => requestAnimationFrame(() => modal.classList.add('csm-open')));
-                document.body.style.overflow = 'hidden';
-            }
-
-            function closeSummaryModal(e) {
-                // Only close when clicking the overlay backdrop, not the panel itself
-                if (e && e.target !== document.getElementById('call-summary-modal')) return;
-                closeSummaryModalDirect();
-            }
-
-            function closeSummaryModalDirect() {
-                const modal = document.getElementById('call-summary-modal');
-                if (!modal) return;
-                modal.classList.remove('csm-open');
-                setTimeout(() => { modal.style.display = 'none'; }, 320);
-                document.body.style.overflow = '';
+                el.style.display = 'block';
             }
 
             function resetDemo() {
@@ -849,15 +782,14 @@
                 currentConversationId = null;
                 summaryData = null;
                 stopTimer();
-                closeSummaryModalDirect();
                 document.getElementById('demo-call-phase').style.display = 'none';
                 document.getElementById('demo-success-phase').style.display = 'none';
                 document.getElementById('demo-form-phase').style.display = 'block';
                 document.getElementById('call-timer').textContent = "00:60";
                 const loadingEl = document.getElementById('aia-summary-loading');
-                const btnEl     = document.getElementById('aia-view-summary-btn');
                 if (loadingEl) loadingEl.style.display = 'none';
-                if (btnEl)     btnEl.style.display = 'none';
+                const inlineSummary = document.getElementById('aia-inline-summary');
+                if (inlineSummary) { inlineSummary.style.display = 'none'; inlineSummary.innerHTML = ''; }
             }
 
             // Initialize Event Listeners (DOMContentLoaded already fired — attach directly)
@@ -1241,28 +1173,6 @@
         }, 9000);
     </script>
 
-    <!-- ===== CALL SUMMARY MODAL ===== -->
-    <div id="call-summary-modal" class="csm-overlay" style="display:none" onclick="closeSummaryModal(event)">
-        <div class="csm-panel">
-            <div class="csm-header">
-                <div class="csm-header-left">
-                    <div class="csm-header-icon">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/></svg>
-                    </div>
-                    <div>
-                        <div class="csm-header-title">Call Summary</div>
-                        <div class="csm-header-sub" id="csm-conv-id"></div>
-                    </div>
-                </div>
-                <button class="csm-close-btn" onclick="closeSummaryModalDirect()" aria-label="Close summary">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-                </button>
-            </div>
-            <div class="csm-body" id="csm-body">
-                <!-- Populated by renderSummaryModal() -->
-            </div>
-        </div>
-    </div>
 </body>
 
 </html>
