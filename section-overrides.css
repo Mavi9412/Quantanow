@@ -6593,3 +6593,194 @@ img {
   outline: none !important;
 }
 
+/* ===== DEMO SUCCESS UI ===== */
+.aia-success-ui {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  padding: 20px 0;
+}
+
+.aia-success-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(60px);
+  z-index: 0;
+  opacity: 0.6;
+  pointer-events: none;
+}
+.aia-success-orb--1 {
+  width: 260px;
+  height: 260px;
+  background: rgba(0, 232, 135, 0.15);
+  top: -80px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.aia-success-orb--2 {
+  width: 200px;
+  height: 200px;
+  background: rgba(37, 99, 235, 0.15);
+  bottom: -40px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.aia-success-icon {
+  position: relative;
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 24px;
+}
+.aia-success-ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 3px solid rgba(0, 232, 135, 0.2);
+  border-top-color: #00E887;
+  animation: aia-spin 1.5s cubic-bezier(0.68, -0.55, 0.265, 1.55) infinite;
+  box-shadow: 0 0 24px rgba(0, 232, 135, 0.25);
+}
+.aia-success-check {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: aia-pop-in 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.5s backwards;
+}
+.aia-success-check svg {
+  width: 36px;
+  height: 36px;
+  filter: drop-shadow(0 2px 8px rgba(0, 232, 135, 0.4));
+}
+@keyframes aia-pop-in {
+  0% { transform: scale(0); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+#aia-summary-status {
+  margin-top: 36px;
+  text-align: left;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 20px;
+  padding: 28px;
+  backdrop-filter: blur(16px);
+  position: relative;
+  z-index: 5;
+  box-shadow: 0 16px 40px rgba(0,0,0,0.25);
+}
+
+.aia-summary-loading {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.ais-skeleton-card {
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 12px;
+  padding: 18px;
+  border: 1px solid rgba(255, 255, 255, 0.04);
+}
+.ais-sk-label {
+  height: 12px;
+  width: 90px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 6px;
+  margin-bottom: 16px;
+  animation: sk-pulse 1.8s infinite ease-in-out;
+}
+.ais-sk-line {
+  height: 10px;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 4px;
+  margin-bottom: 10px;
+  animation: sk-pulse 1.8s infinite ease-in-out;
+}
+.ais-sk-line:last-child {
+  margin-bottom: 0;
+}
+.ais-sk-short { width: 45%; }
+.ais-sk-medium { width: 75%; }
+@keyframes sk-pulse {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 0.8; }
+}
+
+.ais-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  animation: aia-fade-in 0.6s ease-out;
+}
+@keyframes aia-fade-in {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.ais-card {
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 14px;
+  padding: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  transition: transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1), background 0.25s ease;
+}
+.ais-card:hover {
+  background: rgba(255, 255, 255, 0.05);
+  transform: translateY(-3px);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+.ais-card-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.85rem;
+  color: #a1a1aa;
+  margin-bottom: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+}
+.ais-card-header svg {
+  color: #00E887;
+}
+.ais-card-value {
+  font-size: 1.1rem;
+  color: #f4f4f5;
+  line-height: 1.6;
+}
+.ais-purpose {
+  font-style: italic;
+  color: #d4d4d8;
+}
+.ais-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.ais-list li {
+  position: relative;
+  padding-left: 24px;
+  font-size: 1.05rem;
+  color: #d4d4d8;
+  line-height: 1.5;
+}
+.ais-list li::before {
+  content: '→';
+  position: absolute;
+  left: 0;
+  color: #00E887;
+  font-weight: bold;
+}
+.ais-empty {
+  font-size: 0.95rem;
+  color: #71717a;
+  font-style: italic;
+}
+
+
