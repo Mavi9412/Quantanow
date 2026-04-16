@@ -4648,50 +4648,58 @@ a.contact-info-value:hover {
 .aia-summary-loading {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 16px;
-  padding: 24px 0 8px;
+  gap: 10px;
+  margin-top: 8px;
+  text-align: left;
+  animation: csm-btn-appear 0.35s ease;
 }
 
-.aia-summary-loading span {
-  font-size: 0.88rem;
-  color: rgba(255, 255, 255, 0.45);
-  letter-spacing: 0.04em;
-}
-
-/* Skeleton cards while loading */
-.aia-summary-loading::after {
-  content: "";
-  display: block;
-  width: 100%;
-  height: 80px;
+/* Skeleton card — matches .ais-card exactly */
+.ais-skeleton-card {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.07);
   border-radius: 12px;
-  background: linear-gradient(90deg,
-    rgba(255,255,255,0.04) 25%,
-    rgba(255,255,255,0.09) 50%,
-    rgba(255,255,255,0.04) 75%);
-  background-size: 200% 100%;
-  animation: aia-shimmer 1.6s infinite;
+  padding: 13px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  overflow: hidden;
 }
 
+/* Shimmer animation */
 @keyframes aia-shimmer {
   0%   { background-position: 200% 0; }
   100% { background-position: -200% 0; }
 }
 
-/* Spinner */
-.aia-loading-spinner {
-  width: 28px;
-  height: 28px;
-  border: 2.5px solid rgba(0, 232, 135, 0.18);
-  border-top-color: #00E887;
-  border-radius: 50%;
-  flex-shrink: 0;
-  animation: csm-spin 0.8s linear infinite;
+.ais-sk-label,
+.ais-sk-line {
+  border-radius: 6px;
+  background: linear-gradient(90deg,
+    rgba(255,255,255,0.05) 25%,
+    rgba(255,255,255,0.11) 50%,
+    rgba(255,255,255,0.05) 75%);
+  background-size: 200% 100%;
+  animation: aia-shimmer 1.5s ease-in-out infinite;
 }
-@keyframes csm-spin {
-  to { transform: rotate(360deg); }
+
+.ais-sk-label {
+  height: 9px;
+  width: 38%;
 }
+
+.ais-sk-line {
+  height: 13px;
+  width: 100%;
+}
+.ais-sk-medium { width: 72%; }
+.ais-sk-short  { width: 40%; }
+
+/* Stagger the shimmer on each row */
+.ais-skeleton-card:nth-child(2) .ais-sk-label,
+.ais-skeleton-card:nth-child(2) .ais-sk-line  { animation-delay: 0.15s; }
+.ais-skeleton-card:nth-child(3) .ais-sk-label,
+.ais-skeleton-card:nth-child(3) .ais-sk-line  { animation-delay: 0.3s; }
 
 /* "View Call Summary" button */
 .aia-view-summary-btn {
@@ -6541,21 +6549,9 @@ img {
   justify-content: center;
 }
 
+/* .aia-summary-loading responsive override — inherits skeleton styles from above */
 .aia-summary-loading {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  color: #94a3b8;
-  font-size: 0.95rem;
-}
-
-.aia-loading-spinner {
-  width: 18px;
-  height: 18px;
-  border: 2px solid rgba(0, 232, 135, 0.2);
-  border-top-color: #00E887;
-  border-radius: 50%;
-  animation: aia-spin 0.8s linear infinite;
+  width: 100%;
 }
 
 .aia-view-summary-btn {

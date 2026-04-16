@@ -420,8 +420,20 @@
                             <!-- Inline Call Summary -->
                             <div id="aia-summary-status" class="aia-summary-status">
                                 <div id="aia-summary-loading" class="aia-summary-loading" style="display:none">
-                                    <div class="aia-loading-spinner"></div>
-                                    <span>Analyzing your call...</span>
+                                    <div class="ais-skeleton-card">
+                                        <div class="ais-sk-label"></div>
+                                        <div class="ais-sk-line ais-sk-short"></div>
+                                    </div>
+                                    <div class="ais-skeleton-card">
+                                        <div class="ais-sk-label"></div>
+                                        <div class="ais-sk-line"></div>
+                                        <div class="ais-sk-line ais-sk-medium"></div>
+                                    </div>
+                                    <div class="ais-skeleton-card">
+                                        <div class="ais-sk-label"></div>
+                                        <div class="ais-sk-line ais-sk-medium"></div>
+                                        <div class="ais-sk-line ais-sk-short"></div>
+                                    </div>
                                 </div>
                                 <div id="aia-inline-summary" style="display:none"></div>
                             </div>
@@ -608,36 +620,24 @@
             }
 
             async function endDemoCall() {
-                const finalId = currentConversationId;
                 if (conversation) {
                     await conversation.endSession();
+                    // onDisconnect fires during endSession and handles showSuccess
                     conversation = null;
                 }
                 stopTimer();
-                showSuccess(finalId);
             }
 
             function showSuccess(convId) {
                 document.getElementById('demo-call-phase').style.display = 'none';
                 document.getElementById('demo-success-phase').style.display = 'block';
-                
-                if (convId) {
-                    fetchSummary(convId);
-                }
+                fetchSummary(convId);
             }
 
             async function fetchSummary(convId) {
-                const loadingEl   = document.getElementById('aia-summary-loading');
-                const loadingText = loadingEl ? loadingEl.querySelector('span') : null;
+                const loadingEl = document.getElementById('aia-summary-loading');
 
                 if (loadingEl) loadingEl.style.display = 'flex';
-
-                const isLocal = window.location.hostname === 'localhost' ||
-                               window.location.hostname === '127.0.0.1' ||
-                               window.location.hostname === '' ||
-                               window.location.hostname.startsWith('192.168.') ||
-                               window.location.hostname.endsWith('.local');
-                const backendUrl = isLocal ? 'http://localhost:3000/api' : '/api';
 
                 // Helper — hide loader and show whatever we have
                 function showSummary(raw) {
@@ -645,6 +645,20 @@
                     if (loadingEl) loadingEl.style.display = 'none';
                     renderInlineSummary(summaryData);
                 }
+
+                // No conversation ID — skip API polling, show fallback immediately
+                if (!convId) {
+                    await new Promise(r => setTimeout(r, 1500));
+                    showSummary({ conversationId: null });
+                    return;
+                }
+
+                const isLocal = window.location.hostname === 'localhost' ||
+                               window.location.hostname === '127.0.0.1' ||
+                               window.location.hostname === '' ||
+                               window.location.hostname.startsWith('192.168.') ||
+                               window.location.hostname.endsWith('.local');
+                const backendUrl = isLocal ? 'http://localhost:3000/api' : '/api';
 
                 let attempts = 0;
                 const maxAttempts = 5; // max ~20s total
@@ -667,11 +681,6 @@
 
                     } catch (e) {
                         attempts++;
-                        if (loadingText) {
-                            loadingText.textContent = attempts >= 3
-                                ? "Almost done..."
-                                : "Analyzing your call...";
-                        }
 
                         if (attempts < maxAttempts) {
                             return setTimeout(poll, 4000);
